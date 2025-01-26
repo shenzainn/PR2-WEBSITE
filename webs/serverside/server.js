@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+
 app.use(express.json());
 app.set('views', path.join(__dirname, '../views'));
 app.set('view engine', 'ejs')
@@ -16,7 +17,9 @@ const adminRouter = require('./routes/admin')
 app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => {
-    res.render('index');
+    const portNum = process.env.port || 3000;
+    const localIP = '';
+    res.render('index', {portNum, localIP });
 })
 
 const port = process.env.port || 3000;

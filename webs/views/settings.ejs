@@ -4,23 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="../CSS/styles.css">
+    <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
+
 <body>
     <section id = "sidebar">
         <div class="logo">
-            <img src = "images/UE LOGO.png" alt = "University of the East Logo">
+            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
             
         </div>
         
         <div class = "items">
-            <li><a href="home.html">Home</a></li>
-            <li><a href="tracking.html">Track</a></li>
-            <li><a href="messages.html">Messages</a></li>
-            <li><a href="settings.html">Settings</a></li>
-            <li><a href="help.html">Help</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
     </section>
 </body>

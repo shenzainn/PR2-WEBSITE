@@ -11,18 +11,18 @@
 <body>
     <section id = "sidebar">
         <div class="logo">
-            <img src = "images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
             
         </div>
         
         <div class = "items">
-            <li><a href="home.ejs">Home</a></li>
-            <li><a href="http://localhost:3000/students/track">Track</a></li>
-            <li><a href="messages.ejs">Messages</a></li>
-            <li><a href="settings.ejs">Settings</a></li>
-            <li><a href="help.ejs">Help</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
     </section>
     <section id="main-content">
@@ -40,7 +40,7 @@
             <div class="action-card">
                 <h2>Track Status</h2>
                 <p>Check the progress of your submissions.</p>
-                <button onclick="location.href='localhost:3000/tracking'">View</button>
+                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/students'">View</button>
             </div>
             <div class="action-card">
                 <h2>Notifications</h2>
