@@ -18,7 +18,7 @@ app.use('/admin', adminRouter);
 
 app.get('/', (req, res) => {
     const portNum = process.env.port || 3000;
-    const localIP = '';
+    const localIP = 'insert IP';
     res.render('index', {portNum, localIP });
 })
 

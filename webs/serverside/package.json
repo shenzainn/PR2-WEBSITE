@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "devStart": "nodemon ../serverside/severSetup/server.js"
+    "start": "nodemon ../serverside/severSetup/server.js"
   },
   "keywords": [],
   "author": "",
