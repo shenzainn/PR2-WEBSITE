@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const portNum = process.env.port || 3000;
-const localIP = '192.168.117.73'; 
+const localIP = ''; 
 
 router.get('/', function (req, res) {
     res.render("AdminHome.ejs",{portNum, localIP })
