@@ -1,18 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-    <body>
-        <h1>Welcome to the University of the East</h1>
-        <p>The University of the East is a leading institution in the region, committed to promoting excellence in education, research, and innovation.</p>
-        <p>Founded in 1877, the University has grown to become a global leader in higher education and research.</p>
-        <p>Our campus is located in the heart of the city, with a rich history and vibrant culture.</p>
-        <p>Our mission is to provide a world-class education for all our students, and to contribute to the development of our nation and the world.</p>
-        <p>For more information about our university, please visit our website at <a href="https://www.ue.edu">ue.edu</a>.</p>
-        <p>Thank you for visiting!</p>
-        
-        <ol>
-            <li><a href="http://<%= locals.localIP%>:<%= locals.portNum%>/students">Student Home Page</a></li>
-            <li><a href="http://<%= locals.localIP%>:<%= locals.portNum%>/admin">Admin Home Page</a></li>
-        </ol>
-        
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+    <div class="container" id="signUp" style="display:none;">
+     <h1 class="form-title">Register</h1>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="fName" id="fName" placeholder="First Name" required>
+            <label for="fname">First Name</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="lName" id="lName" placeholder="Last Name" required>
+            <label for="lName">Last Name</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-envelope"></i>
+            <input type="email" name="email" id="email" placeholder="Email" required>
+            <label for="email">Email</label>
+        </div>
+        <div class="input-group">
+            <i class="fa-regular fa-id-card"></i>
+            <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> <label for="StudentNumber"></label>
+            <label for="email">Student Number</label>
+        </div>
+        <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" id="password" placeholder="Password" required>
+            <label for="password">Password</label>
+        </div>
+        <input type="submit" class="btn" value="Sign Up" name="signUp">
+     </form>
+     <div>
+        <div class="icons">
+        </div>
+        <div class="links">
+        <p>Already Have Accouts?</p>
+            <button id="signInButton">Sign In</button>
+        </div>
+    </div>
+</div>
+
+    <div class="container" id="signIn">
+        <h1 class="form-title"><img src="EduVault UI Design.png">EduVault</h1>
+    <p class="login-box-msg">Sign in to start your session</p>
+       <div class="input-group">
+        <i class="fa-regular fa-id-card"></i>
+        <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> <label for="StudentNumber"></label>
+           <label for="email">Student Number</label>
+       </div>
+       <div class="input-group">
+           <i class="fas fa-lock"></i>
+           <input type="password" id="password" name="password" placeholder="Password" required>
+           <label for="password">Password</label>
+       </div>
+       <p class="recover">
+        <a href="#">Forgot Password?</a>
+       </p>
+       <input type="submit" class="btn" value="Sign In" name="signIn">
+    </form>
+    <div>
+       <p class="or">
+        ━━━ or ━━━
+       </p>
+       <div class="icons">
+        <i class="fa-brands fa-google"></i>
+       </div>
+       <div class="links">
+       <p>Don't Have Accout yet?</p>
+           <button id="signUpButton">Sign Up</button>
+       </div>
+   </div>
+</div>
+    <script src="script.js"></script>
+</body>
 </html>
