@@ -3,27 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
-    <link rel="stylesheet" href="/css/styles.css">
+    <title>Admin Home</title>
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
-    <section id = "sidebar">
+    <button id="menu-toggle">☰</button>
+    <section id="sidebar">
         <div class="logo">
-            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src="images/UE LOGO.png" alt="University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
         
-        <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+        <div class="items">
+            <li><a href="adminHome.html">Home</a></li>
+            <li><a href="manageDocuments.html">Manage Documents</a></li>
+            <li><a href="tracking.html">Track Requests</a></li>
+            <li><a href="users.html">User Management</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            <li><a href="help.html">Help</a></li>
         </div>
     </section>
+
+    <section id="main-content">
+        <h1>Welcome, Admin</h1>
+        <p>Manage document requests, track status, and oversee user accounts.</p>
+
+        <div class="quick-actions">
+            <div class="action-card">
+                <h2>Manage Documents</h2>
+                <p>Approve, reject, or review submitted documents.</p>
+                <button onclick="location.href='manageDocuments.html'">Go</button>
+            </div>
+
+            <div class="action-card">
+                <h2>Track Requests</h2>
+                <p>Monitor the status of ongoing document processing.</p>
+                <button onclick="location.href='tracking.html'">Go</button>
+            </div>
+
+            <div class="action-card">
+                <h2>User Management</h2>
+                <p>View, add, or remove users from the system.</p>
+                <button onclick="location.href='users.html'">Go</button>
+            </div>
+        </div>
+
+        <script>
+            document.getElementById('menu-toggle').addEventListener('click', function() {
+                document.getElementById('sidebar').classList.toggle('active');
+            });
+        </script>
 </body>
 </html>
