@@ -16,6 +16,7 @@ body {
     width: 450px;
     padding: 1.5rem;
     margin: 50px auto;
+    opacity: 0.6;
     border-radius: 10px;
     box-shadow: 0 20px 35px rgba(0, 0, 1, 0.9);
 }
@@ -146,15 +147,4 @@ img{
     height: auto;
     margin-bottom: 30px;
     margin-right: -80px;
-}
-
-#mr-washy-washy {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-width: 50%;
-    max-height: 100%; /* Ensure full body visibility within screen */
-    z-index: 1000; /* Ensure it's on top of other elements */
-    pointer-events: none; /* Allow clicks to pass through the image */
 }

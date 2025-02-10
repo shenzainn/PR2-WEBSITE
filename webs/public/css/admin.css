@@ -1,10 +1,15 @@
 body {
+    background-image: url("./images/IMAGE-UE-BAK.jpeg");
+    background-color: #e5e7eb; /* Keep background color */
+    background-size: cover; /* Cover the full screen */
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Prevent tiling */
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #e5e7eb;
     display: flex;
     flex-direction: column;
 }
+
 
 #sidebar {
     background: #8b0000; 
