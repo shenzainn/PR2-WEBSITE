@@ -1,9 +1,4 @@
 body {
-    background-image: url("./images/IMAGE-UE-BAK.jpeg");
-    background-color: #e5e7eb; /* Keep background color */
-    background-size: cover; /* Cover the full screen */
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Prevent tiling */
     margin: 0;
     font-family: Arial, sans-serif;
     display: flex;
@@ -19,6 +14,7 @@ body {
     overflow-y: auto;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease-in-out;
+    z-index: 1;
 }
 
 /* Sidebar transition for active state */
@@ -37,7 +33,7 @@ body {
     position: fixed;
     top: 10px;
     left: 10px;
-    z-index: 1;
+    z-index: 2;
 }
 
 #sidebar .logo {
@@ -205,3 +201,53 @@ body {
     }
 }
 
+/*help tab - start*/
+.faq {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.faq h3 {
+    color: #8b0000;
+}
+
+details {
+    display: block;
+    width: 90%; /* Ensures details are not full width */
+    margin: 10px auto; /* Centers and adds spacing */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background: #fff;
+    transition: all 0.3s ease-in-out;
+}
+
+summary {
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    padding: 5px;
+    position: center;
+    
+}
+
+details[open] {
+    background: #f9f9f9;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+summary::before {
+    content: "▶";
+    margin-right: 10px;
+    display: inline-block;
+    transition: transform 0.3s ease-in-out;
+}
+
+details[open] summary::before {
+    transform: rotate(90deg);
+}
+
+/*help tab css -end*/

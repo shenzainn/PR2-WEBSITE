@@ -9,6 +9,7 @@
 </head>
 
 <body>
+    <button id="menu-toggle">☰</button>
     <section id = "sidebar">
         <div class="logo">
             <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
@@ -25,5 +26,31 @@
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
         </div>
     </section>
+
+    <section id="main-content">
+        <h2>Help & Support</h2>
+        <div class="faq">
+            <h3>Frequently Asked Questions</h3>
+            <details>
+                <summary>How do I track my documents?</summary>
+                <p>Go to the "Track" tab in the sidebar to view your document status.</p>
+            </details>
+            <details>
+                <summary>How do I send messages?</summary>
+                <p>Navigate to the "Messages" tab to communicate with admins or users.</p>
+            </details>
+            <details>
+                <summary>Where can I change my settings?</summary>
+                <p>Click on the "Settings" tab to modify your preferences.</p>
+            </details>
+        </div>
+    </section>
+    
+
+    <script>
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('active');
+        });
+    </script>
 </body>
 </html>
