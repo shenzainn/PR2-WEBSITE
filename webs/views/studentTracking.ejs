@@ -17,6 +17,25 @@
             <h2>Structured Document Management System</h2>
             
         </div>
+
+        <h2>Track Your Request</h2>
+    
+        <form action="/student-tracking" method="GET">
+            <label for="studentName">Enter Your Name:</label>
+            <input type="text" id="studentName" name="studentName" required>
+            <button type="submit">Check Status</button>
+        </form>
+
+        <% if (requestData) { %>
+            <h3>Request Status: <%= requestData.requestStatus %></h3>
+
+            <% if (requestData.requestStatus === 'Approved') { %>
+                <p>Your requested file is ready for download:</p>
+                <a href="<%= requestData.fileUrl %>" download>Download File</a>
+            <% } else { %>
+                <p>Your request is still being processed.</p>
+            <% } %>
+        <% } %>
         
         <div class = "items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
@@ -25,6 +44,8 @@
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
+
+        
     </section>
 </body>
 </html>

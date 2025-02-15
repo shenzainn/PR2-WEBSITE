@@ -18,6 +18,40 @@
             
         </div>
         
+        <h2>Admin - Manage Requests</h2>
+
+        <% if (requests.length > 0) { %>
+            <table border="1">
+                <tr>
+                    <th>Student Name</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                <% requests.forEach(request => { %>
+                    <tr>
+                        <td><%= request.studentName %></td>
+                        <td><%= request.requestStatus %></td>
+                        <td>
+                            <% if (request.requestStatus === 'Pending') { %>
+                                <form action="/approve-request/<%= request._id %>" method="POST" enctype="multipart/form-data">
+                                    <label>Upload File:</label>
+                                    <input type="file" name="file" required>
+                                    <button type="submit">Approve & Send File</button>
+                                </form>
+                                <form action="/reject-request/<%= request._id %>" method="POST">
+                                    <button type="submit">Reject</button>
+                                </form>
+                            <% } else { %>
+                                <p>Completed</p>
+                            <% } %>
+                        </td>
+                    </tr>
+                <% }); %>
+            </table>
+        <% } else { %>
+            <p>No pending requests.</p>
+        <% } %>
+        
         <div class = "items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>

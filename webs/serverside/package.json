@@ -10,8 +10,15 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
     "ejs": "^3.1.10",
-    "express": "^4.21.2"
+    "express": "^4.21.2",
+    "gridfs-storage-engine": "^0.2.2",
+    "gridfs-stream": "^1.1.1",
+    "mongoose": "^8.10.1",
+    "multer": "^1.4.5-lts.1",
+    "underscore": "^1.13.7"
   },
   "devDependencies": {
     "nodemon": "^3.1.9"
