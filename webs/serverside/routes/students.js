@@ -20,7 +20,7 @@ router.get('/check', (req, res) => {
 })
 
 router.get('/submit', (req, res) => {
-    
+    res.render("StudentSubmit.ejs",{portNum, localIP })
 })
 
 router.get('/settings', (req, res) => {
