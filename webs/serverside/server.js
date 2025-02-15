@@ -5,8 +5,10 @@ const multer = require("multer");
 const { GridFSBucket } = require("mongodb");
 const cors = require("cors");
 require("dotenv").config();
+const Request = require("./models/Request");
 
 const app = express();
+
 
 // MongoDB Connection
 const mongoURI = "mongodb://localhost:27017/mydatabase"; 
@@ -80,7 +82,7 @@ app.use('/admin', adminRouter);
 // Port setup
 app.get('/', (req, res) => {
     const portNum = process.env.PORT || 3000;
-    const localIP = '192.168.74.73';
+    const localIP = '192.168.1.73'; // chsnge to localIP on your pc
     res.render('index', { portNum, localIP });
 });
 
@@ -89,19 +91,16 @@ app.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
 
-// Serve Student Tracking Page
-app.get("/student-tracking", async (req, res) => {
-    const { studentName } = req.query;
-    if (!studentName) return res.render("StudentTracking");
-
-    const requestData = await Request.findOne({ studentName });
-    res.render("StudentTracking", { requestData });
-});
-
 // Serve Admin Tracking Page
-app.get("/admin-tracking", async (req, res) => {
-    const requests = await Request.find();
-    res.render("AdminTracking", { requests });
+app.get("/admin/track", async (req, res) => {
+    try {
+        const requests = await Request.find(); 
+
+        res.render("AdminTracking", { requests }); 
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+        res.status(500).send("Internal Server Error");
+    }
 });
 
 // Approve Request & Upload File
@@ -118,3 +117,5 @@ app.post("/reject-request/:id", async (req, res) => {
     await Request.findByIdAndUpdate(req.params.id, { requestStatus: "Rejected" });
     res.redirect("/admin-tracking");
 });
+
+

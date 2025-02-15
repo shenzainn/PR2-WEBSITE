@@ -1,15 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const portNum = process.env.port || 3000;
-const localIP = '192.168.74.73'; 
+const localIP = '192.168.1.13'; 
+const Request = require("../models/request");
 
 
 router.get("/", (req, res) => {
     res.render("StudentHome.ejs",{portNum, localIP })
     })
 
-router.get('/track', (req, res) => {
+router.get('/track',async (req, res) => {
     res.render("StudentTracking.ejs",{portNum, localIP })
+
+    const { studentName } = req.query;
+
+    if (!studentName) {
+        return res.render("StudentTracking", { requestData: null });
+    }
+
+    try {
+        const requestData = await Request.findOne({ studentName });
+        res.render("StudentTracking", { requestData: requestData || null });
+    } catch (error) {
+        console.error("Error fetching request data:", error);
+        res.status(500).send("Internal Server Error");
+    }
 })
 router.get('/search', (req, res) => {
     

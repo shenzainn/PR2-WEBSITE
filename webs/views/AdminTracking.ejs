@@ -17,10 +17,12 @@
             <h2>Structured Document Management System</h2>
             
         </div>
-        
+
         <h2>Admin - Manage Requests</h2>
 
-        <% if (requests.length > 0) { %>
+        <h2>Admin - Manage Requests</h2>
+
+        <% if (requests && requests.length > 0) { %> 
             <table border="1">
                 <tr>
                     <th>Student Name</th>
@@ -32,25 +34,20 @@
                         <td><%= request.studentName %></td>
                         <td><%= request.requestStatus %></td>
                         <td>
-                            <% if (request.requestStatus === 'Pending') { %>
-                                <form action="/approve-request/<%= request._id %>" method="POST" enctype="multipart/form-data">
-                                    <label>Upload File:</label>
-                                    <input type="file" name="file" required>
-                                    <button type="submit">Approve & Send File</button>
-                                </form>
-                                <form action="/reject-request/<%= request._id %>" method="POST">
-                                    <button type="submit">Reject</button>
-                                </form>
-                            <% } else { %>
-                                <p>Completed</p>
-                            <% } %>
+                            <form action="/approve-request/<%= request._id %>" method="POST">
+                                <button type="submit">Approve</button>
+                            </form>
+                            <form action="/reject-request/<%= request._id %>" method="POST">
+                                <button type="submit">Reject</button>
+                            </form>
                         </td>
                     </tr>
-                <% }); %>
+                <% }) %>
             </table>
-        <% } else { %>
-            <p>No pending requests.</p>
+        <% } else if (request === 0) { %>
+            <p>No requests found.</p>
         <% } %>
+
         
         <div class = "items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>

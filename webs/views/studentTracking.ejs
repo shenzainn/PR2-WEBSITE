@@ -28,13 +28,12 @@
 
         <% if (requestData) { %>
             <h3>Request Status: <%= requestData.requestStatus %></h3>
-
+        
             <% if (requestData.requestStatus === 'Approved') { %>
-                <p>Your requested file is ready for download:</p>
-                <a href="<%= requestData.fileUrl %>" download>Download File</a>
-            <% } else { %>
-                <p>Your request is still being processed.</p>
+                <p>Download your file: <a href="<%= requestData.fileUrl %>" target="_blank">Download</a></p>
             <% } %>
+        <% } else { %>
+            <p>No request found. Please enter a valid student name.</p>
         <% } %>
         
         <div class = "items">
