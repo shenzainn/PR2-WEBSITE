@@ -10,12 +10,10 @@ router.get("/", (req, res) => {
     })
 
 router.get('/track',async (req, res) => {
-    res.render("StudentTracking.ejs",{portNum, localIP })
-
     const { studentName } = req.query;
 
     if (!studentName) {
-        return res.render("StudentTracking", { requestData: null });
+        return res.render("StudentTracking", { requestData: null, portNum, localIP });
     }
 
     try {

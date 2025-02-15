@@ -17,10 +17,17 @@
             <h2>Structured Document Management System</h2>
             
         </div>
+        
+        <div class = "items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+        </div>
+    </section>
 
-        <h2>Admin - Manage Requests</h2>
-
-        <h2>Admin - Manage Requests</h2>
+    <h2>Admin - Manage Requests</h2>
 
         <% if (requests && requests.length > 0) { %> 
             <table border="1">
@@ -44,18 +51,9 @@
                     </tr>
                 <% }) %>
             </table>
-        <% } else if (request === 0) { %>
+        <% } else { %> 
             <p>No requests found.</p>
         <% } %>
-
         
-        <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
-        </div>
-    </section>
 </body>
 </html>

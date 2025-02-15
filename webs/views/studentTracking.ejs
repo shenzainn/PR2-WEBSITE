@@ -18,7 +18,20 @@
             
         </div>
 
-        <h2>Track Your Request</h2>
+        
+        
+        <div class = "items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+        </div>
+
+        
+    </section>
+
+    <h2>Track Your Request</h2>
     
         <form action="/student-tracking" method="GET">
             <label for="studentName">Enter Your Name:</label>
@@ -35,16 +48,5 @@
         <% } else { %>
             <p>No request found. Please enter a valid student name.</p>
         <% } %>
-        
-        <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
-        </div>
-
-        
-    </section>
 </body>
 </html>
