@@ -7,9 +7,13 @@
 </head>
 
 <body>
-    <h2>Upload DOCX / PDF</h2>
-    <input type="file" id="fileInput" accept=".pdf,.docx">
-    <button onclick="uploadFile()">Upload</button>
+    <section id="main-content">
+        <h2>Upload Document</h2>
+        <div class="upload-container">
+            <input type="file" id="fileInput" accept=".pdf,.docx.,jpg.">
+            <button onclick="uploadFile()">Upload</button>
+        </div>
+    </section>
 
     <script>async function uploadFile() {
         const fileInput = document.getElementById("fileInput");
@@ -34,6 +38,7 @@
         } catch (error) {
             console.error("Error uploading file:", error);
         }
-    }</script>
+    }
+</script>
 </body>
 </html>

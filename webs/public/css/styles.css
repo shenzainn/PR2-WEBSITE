@@ -200,3 +200,43 @@ body {
     }
 }
 
+/*student submit css start*/
+
+
+#main-content h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Upload Box */
+.upload-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: auto;
+}
+
+.upload-container input[type="file"] {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+}
+
+.upload-container button {
+    background: #8b0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.upload-container button:hover {
+    background: #600000;
+}
+
+/*student submit - end*/
