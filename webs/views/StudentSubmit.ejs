@@ -4,9 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>File Upload</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
+    <button id="menu-toggle">☰</button>
+    <section id = "sidebar">
+        <div class="logo">
+            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+            
+        </div>
+        
+        <div class = "items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+        </div>
+    </section>
+
     <section id="main-content">
         <h2>Upload Document</h2>
         <div class="upload-container">
@@ -15,7 +34,7 @@
         </div>
     </section>
 
-    <script>async function uploadFile() {
+    <script src="/js/script.js">async function uploadFile() {
         const fileInput = document.getElementById("fileInput");
         const file = fileInput.files[0];
         if (!file) {

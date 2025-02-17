@@ -15,3 +15,7 @@ if (signUpButton && signInButton) {
     });
 }
 
+// Toggle Sidebar Menu
+document.getElementById('menu-toggle').addEventListener('click', function() {
+    document.getElementById('sidebar').classList.toggle('active');
+});
