@@ -1,6 +1,11 @@
 const express = require('express');
 const router = express.Router();
+<<<<<<< HEAD
 const { conn } = require("../db");  // Import DB connection
+=======
+const portNum = process.env.port || 3000;
+const localIP = '192.168.74.73'; 
+>>>>>>> a56120a56984d5857a9104419cc5175d2975f556
 const Request = require("../models/request");
 
 conn();  // Ensure DB connection
