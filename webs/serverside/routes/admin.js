@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const { conn } = require("../db");  // Import DB connection
+/*
+1. ../ reroutes to serverside folder immediately
+2. select folder name first before file name
+*/
+const { conn } = require("../routes/db");  // Import DB connection
 const RequestModel = require('../models/request');
 
 conn();  // Ensure DB connection
 
 const portNum = process.env.port || 3000;
 const localIP = '192.168.1.13'; 
-const RequestModel = require('../models/request');  // Adjust the path if needed
-
 
 router.get('/', function (req, res) {
     res.render("AdminHome.ejs",{portNum, localIP })

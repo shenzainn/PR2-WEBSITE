@@ -32,4 +32,4 @@ const isAdmin = (req, res, next) => {
     }
 };
 
-module.exports = { isAdmin }; // jc
+module.exports = { isAdmin }; // thank you, seen it

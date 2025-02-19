@@ -19,3 +19,8 @@ if (signUpButton && signInButton) {
 document.getElementById('menu-toggle').addEventListener('click', function() {
     document.getElementById('sidebar').classList.toggle('active');
 });
+
+/* how to reroute to other files to the ejs files:
+1. ejs files are automatically loaded to search for the public folder 
+2. always start with a slash ex. /css/ or /images/
+*/

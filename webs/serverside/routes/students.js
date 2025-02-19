@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-<<<<<<< HEAD
-const { conn } = require("../db");  // Import DB connection
-=======
-const portNum = process.env.port || 3000;
-const localIP = '192.168.74.73'; 
->>>>>>> a56120a56984d5857a9104419cc5175d2975f556
+// how to route files 
+
+/*
+1. ../ reroutes to serverside folder immediately
+2. select folder name first before file name
+*/
+
+const { conn } = require("../routes/db");  // Import DB connection
 const Request = require("../models/request");
 
 conn();  // Ensure DB connection
