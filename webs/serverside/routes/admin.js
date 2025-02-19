@@ -10,7 +10,7 @@ const RequestModel = require('../models/request');
 conn();  // Ensure DB connection
 
 const portNum = process.env.port || 3000;
-const localIP = '192.168.1.13'; 
+const localIP = '192.168.76.73'; 
 
 router.get('/', function (req, res) {
     res.render("AdminHome.ejs",{portNum, localIP })

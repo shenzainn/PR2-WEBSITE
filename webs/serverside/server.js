@@ -84,7 +84,7 @@ app.use("/admin", adminRouter);
 // Port setup
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.74.73"; // change to localIP on your pc
+  const localIP = "192.168.76.73"; // change to localIP on your pc
   res.render("index", { portNum, localIP });
 });
 

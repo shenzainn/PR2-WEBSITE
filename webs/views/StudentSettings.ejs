@@ -10,15 +10,16 @@
 
 <body>
     <button id="menu-toggle">☰</button>
-    <section id = "sidebar">
+    
+    <!-- Sidebar -->
+    <section id="sidebar">
         <div class="logo">
-            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
         
-        <div class = "items">
+        <div class="items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
@@ -26,6 +27,31 @@
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
     </section>
+
+    <!-- Main Content -->
+    <section id="main-content">
+        <h1>Settings</h1>
+
+        <!-- Profile Settings -->
+        <div class="settings-section">
+            <h2>Profile</h2>
+            <div class="profile-container">
+                <img id="profile-pic" src="/images/UE_RED_SEAL.png" alt="Profile Picture">
+                <input type="file" id="profile-upload" accept="image/*">
+                <input type="text" id="profile-name" placeholder="Enter your name">
+            </div>
+        </div>
+
+        <!-- Theme Settings -->
+        <div class="settings-section">
+            <h2>Theme</h2>
+            <div class="theme-options">
+                <button id="light-mode">Light Mode</button>
+                <button id="dark-mode">Dark Mode</button>
+            </div>
+        </div>
+    </section>
+
     <script src="/js/script.js"></script>    
 </body>
 </html>
