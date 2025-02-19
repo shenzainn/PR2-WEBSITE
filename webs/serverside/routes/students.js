@@ -16,7 +16,7 @@ const portNum = process.env.port || 3000;
 const localIP = '192.168.1.13'; 
 
 router.get("/", (req, res) => {
-    res.render("StudentHome.ejs",{portNum, localIP })
+    res.render('StudentHome', { user: req.user, localIP, portNum });
 })
 
 router.get('/track', async (req, res) => {
