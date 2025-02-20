@@ -11,10 +11,9 @@ const app = express();
 
 // Database Connection (Use environment variables for security)
 const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase';
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+mongoose.connect(mongoURI)
+  .then(() => console.log('MongoDB connected.'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 const conn = mongoose.connection;
 let gfs, bucket;
