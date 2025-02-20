@@ -13,7 +13,7 @@ const Request = require("../models/request");
 conn();  // Ensure DB connection
 
 const portNum = process.env.port || 3000;
-const localIP = '192.168.76.73'; 
+const localIP = '192.168.195.73'; 
 
 router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });
