@@ -20,18 +20,26 @@ router.get("/", (req, res) => {
 })
 
 router.get('/track', async (req, res) => {
-    const { studentName } = req.query;
+    res.render("StudentTracking.ejs",{portNum, localIP })
+    const { studentNumber } = req.query;
 
-    if (!studentName) {
-        return res.render("StudentTracking", { requestData: null, portNum, localIP });
+    if (!studentNumber) {
+        return res.status(400).json({ error: "Student number is required." });
     }
 
     try {
-        const requestData = await Request.findOne({ studentName });
-        res.render("StudentTracking", { requestData: requestData || null, portNum, localIP });
+        const requestData = await Request.findOne({ studentNumber });
+
+        if (!requestData) {
+            return res.status(404).json({ error: "No request found." });
+        }
+
+        res.json({
+            requestStatus: requestData.requestStatus,
+            fileUrl: requestData.fileUrl || null,
+        });
     } catch (error) {
-        console.error("Error fetching request data:", error);
-        res.status(500).send("Internal Server Error");
+        res.status(500).json({ error: "Server error." });
     }
 });
 
@@ -50,5 +58,6 @@ router.get('/message', (req, res) => {
 router.get('/help', (req, res) => {
     res.render("StudentHelp.ejs",{portNum, localIP })
 })
+
 
 module.exports = router;
