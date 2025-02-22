@@ -208,3 +208,5 @@ app.post("/reject-request/:id", async (req, res) => {
     await Request.findByIdAndUpdate(req.params.id, { requestStatus: "Rejected" });
     res.redirect("/admin/track");
 });
+
+const Student = require("/models/Student");
