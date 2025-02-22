@@ -51,3 +51,4 @@ if (savedTheme === "dark") {
 // Add event listeners
 darkModeBtn.addEventListener("click", enableDarkMode);
 lightModeBtn.addEventListener("click", enableLightMode);
+

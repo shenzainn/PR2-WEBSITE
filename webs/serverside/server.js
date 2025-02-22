@@ -7,60 +7,98 @@ const cors = require("cors");
 require("dotenv").config();
 
 const app = express();
+app.use(cors());
+app.use(express.json());
 
 // MongoDB Connection
-const mongoURI = process.env.MONGO_URI || 'mongodb://localhost:27017/mydatabase';
-mongoose.connect(mongoURI)
-  .then(() => console.log('MongoDB connected.'))
-  .catch(err => console.error('MongoDB connection error:', err));
+const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/PR2_Website";
+mongoose
+  .connect(mongoURI)
+  .then(() => console.log("MongoDB connected."))
+  .catch((err) => console.error("DB Connection Error:", err));
 
 const conn = mongoose.connection;
-let gfs, bucket;
+let bucket;
 
 conn.once("open", () => {
-  console.log("MongoDB connected.");
-
-  // Initialize GridFS Stream
-  gfs = new GridFSBucket(conn.db, { bucketName: "uploads" });
-
-  // GridFSBucket for writing
-  bucket = new GridFSBucket(conn.db, { bucketName: "uploads" });
+  console.log("MongoDB upload connection open.");
+  bucket = new GridFSBucket(conn.db, { bucketName: "uploads" }); // Stores files in "uploads" bucket
 });
 
-// Multer storage (memory storage before writing to GridFS)
+// Define Mongoose Schema
+const fileSchema = new mongoose.Schema({
+  filename: String,
+  formType: String,
+  uploadDate: { type: Date, default: Date.now },
+});
+
+const FileModel = mongoose.model("Form", fileSchema, "forms"); // Saves metadata in "forms" collection
+
+// Multer storage setup (use memory storage for GridFS)
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Upload Endpoint
-app.post("/upload", upload.single("file"), (req, res) => {
-  if (!req.file) return res.status(400).send("No file uploaded.");
+// Upload endpoint for forms
+app.post("/upload/forms", upload.single("file"), async (req, res) => {
+  console.log("Received file:", req.file);
+  console.log("Form Type:", req.body.formType);
 
-  // Upload to GridFS
-  const uploadStream = bucket.openUploadStream(req.file.originalname);
-  uploadStream.end(req.file.buffer);
+  if (!req.file) return res.status(400).json({ message: "No file uploaded." });
 
-  uploadStream.on("finish", () => {
-    res.json({ message: "File uploaded!", filename: req.file.originalname });
-  });
+  const { formType } = req.body;
+  if (!["137", "138"].includes(formType)) {
+    return res.status(400).json({ message: "Invalid form type. Must be '137' or '138'." });
+  }
+
+  try {
+    const uploadStream = bucket.openUploadStream(req.file.originalname);
+    
+    uploadStream.end(req.file.buffer);
+
+    uploadStream.on("finish", async () => {
+      console.log("File uploaded to GridFS. Saving metadata...");
+
+      const newFile = new FileModel({
+        filename: req.file.originalname,
+        formType: formType,
+        uploadDate: new Date(),
+      });
+
+      await newFile.save(); // Save metadata to "forms" collection
+
+      console.log("File metadata saved:", newFile);
+      res.json({ message: "File uploaded successfully!", file: newFile });
+    });
+
+    uploadStream.on("error", (error) => {
+      console.error("GridFS Upload Error:", error);
+      res.status(500).json({ message: "Error uploading file to GridFS" });
+    });
+
+  } catch (error) {
+    console.error("Error processing upload:", error);
+    res.status(500).json({ message: "Error uploading file" });
+  }
 });
 
-// Get All Files
+// Get all uploaded files metadata
 app.get("/files", async (req, res) => {
   try {
-    const files = await conn.db.collection("uploads.files").find().toArray();
-    if (!files || files.length === 0) return res.status(404).json({ message: "No files found" });
+    const files = await FileModel.find(); // Fetch from "forms" collection
+    if (!files.length) return res.status(404).json({ message: "No files found" });
     res.json(files);
   } catch (error) {
     res.status(500).send("Error fetching files");
   }
 });
 
-// Download File from GridFS
+// Download file from GridFS
 app.get("/files/:filename", async (req, res) => {
   try {
     const file = await conn.db.collection("uploads.files").findOne({ filename: req.params.filename });
     if (!file) return res.status(404).send("File not found");
 
+    res.set("Content-Disposition", `attachment; filename=${file.filename}`);
     const readStream = bucket.openDownloadStreamByName(file.filename);
     readStream.pipe(res);
   } catch (error) {
@@ -68,8 +106,7 @@ app.get("/files/:filename", async (req, res) => {
   }
 });
 
-// ejs setup
-app.use(express.json());
+// EJS setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "../public")));
@@ -80,16 +117,17 @@ app.use("/students", studentRouter);
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
-// Port setup
+// Serve main page
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.144.73"; // change to localIP on your pc
+  const localIP = "192.168.1.13"; // Change to your local IP if needed
   res.render("index", { portNum, localIP });
 });
 
-const port = process.env.PORT || 3000;
-app.listen(3000, () => {
-  console.log("https://localhost:" + 3000);
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`);
 });
 
 // Serve Admin Tracking Page
@@ -106,7 +144,7 @@ app.get("/admin/track", async (req, res) => {
 // Approve Request & Upload File
 app.post("/approve-request/:id", upload.single("file"), async (req, res) => {
   if (!req.file) return res.status(400).send("No file uploaded.");
-  
+
   const fileUrl = `/files/${req.file.originalname}`;
   await Request.findByIdAndUpdate(req.params.id, { requestStatus: "Approved", fileUrl });
   res.redirect("/admin/track");
