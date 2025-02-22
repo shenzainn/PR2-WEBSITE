@@ -38,6 +38,15 @@ const FileModel = mongoose.model("Form", fileSchema, "forms"); // Saves metadata
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
+
+
+
+
+
+
+
+
+
 // Upload endpoint for forms
 app.post("/upload/forms", upload.single("file"), async (req, res) => {
   console.log("Received file:", req.file);
@@ -106,6 +115,15 @@ app.get("/files/:filename", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
 // EJS setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
@@ -124,11 +142,44 @@ app.get("/", (req, res) => {
   res.render("index", { portNum, localIP });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
 });
+
+
+
+
+
+
+
+
 
 // Serve Admin Tracking Page
 app.get("/admin/track", async (req, res) => {
