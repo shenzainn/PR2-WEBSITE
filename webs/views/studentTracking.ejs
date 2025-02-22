@@ -5,50 +5,67 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
     <title>Tracking</title>
-
     <link rel="stylesheet" href="../CSS/styles.css">
 </head>
 
 <body>
     <button id="menu-toggle">☰</button>
-    <section id = "sidebar">
+    <section id="sidebar">
         <div class="logo">
-            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
 
-        
-        
-        <div class = "items">
+        <div class="items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
-
-        
     </section>
 
     <h2>Track Your Request</h2>
     
-        <form action="/student-tracking" method="GET">
-            <label for="studentName">Enter Your Name:</label>
-            <input type="text" id="studentName" name="studentName" required>
-            <button type="submit">Check Status</button>
-        </form>
+    <div id="tracking-status">
+        <p>Fetching tracking information...</p>
+    </div>
 
-        <% if (requestData) { %>
-            <h3>Request Status: <%= requestData.requestStatus %></h3>
-        
-            <% if (requestData.requestStatus === 'Approved') { %>
-                <p>Download your file: <a href="<%= requestData.fileUrl %>" target="_blank">Download</a></p>
-            <% } %>
-        <% } else { %>
-            <p>No request found. Please enter a valid student name.</p>
-        <% } %>
+    <script>
+        async function fetchTrackingInfo() {
+            try {
+                // Assume studentNumber is stored in a session or received from backend
+                const studentNumber = "<%= studentNumber %>"; // Injected from backend
+
+                if (!studentNumber) {
+                    document.getElementById("tracking-status").innerHTML = "<p>Error: Student number not found.</p>";
+                    return;
+                }
+
+                const response = await fetch(`/student-tracking?studentNumber=${studentNumber}`);
+                const data = await response.json();
+
+                if (!data || data.error) {
+                    document.getElementById("tracking-status").innerHTML = "<p>No request found.</p>";
+                    return;
+                }
+
+                let statusHTML = `<h3>Request Status: ${data.requestStatus}</h3>`;
+
+                if (data.requestStatus === "Approved") {
+                    statusHTML += `<p>Download your file: <a href="${data.fileUrl}" target="_blank">Download</a></p>`;
+                }
+
+                document.getElementById("tracking-status").innerHTML = statusHTML;
+            } catch (error) {
+                document.getElementById("tracking-status").innerHTML = "<p>Error fetching tracking information.</p>";
+            }
+        }
+
+        fetchTrackingInfo();
+    </script>
+
     <script src="/js/script.js"></script>    
 </body>
 </html>

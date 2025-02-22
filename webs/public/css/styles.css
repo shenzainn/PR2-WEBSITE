@@ -240,3 +240,66 @@ body {
 }
 
 /*student submit - end*/
+
+
+/* Profile Settings */
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.profile-container img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #8b0000;
+}
+
+.profile-container input[type="file"] {
+    display: block;
+}
+
+.profile-container input[type="text"] {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Theme Settings */
+.theme-options {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.theme-options button {
+    background: #8b0000;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.theme-options button:hover {
+    background: #600000;
+}
+
+/* Dark Theme */
+body.dark-mode {
+    background: #333;
+    color: #fff;
+}
+
+.dark-mode .theme-options button {
+    background: #f0f0f0;
+    color: #333;
+}
+
+.dark-mode .theme-options button:hover {
+    background: #bbb;
+}

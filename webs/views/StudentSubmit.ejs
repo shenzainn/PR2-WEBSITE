@@ -9,15 +9,14 @@
 
 <body>
     <button id="menu-toggle">☰</button>
-    <section id = "sidebar">
+    <section id="sidebar">
         <div class="logo">
-            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
         
-        <div class = "items">
+        <div class="items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
@@ -29,35 +28,47 @@
     <section id="main-content">
         <h2>Upload Document</h2>
         <div class="upload-container">
-            <input type="file" id="fileInput" accept=".pdf,.docx.,jpg.">
+            <label for="formType">Select Document Type:</label>
+            <select id="formType">
+                <option value="137">Form 137</option>
+                <option value="138">Form 138</option>
+            </select>
+
+            <input type="file" id="fileInput" name="file" accept=".pdf,.docx,.jpg">
             <button onclick="uploadFile()">Upload</button>
         </div>
     </section>
 
-    <script src="/js/script.js">async function uploadFile() {
-        const fileInput = document.getElementById("fileInput");
-        const file = fileInput.files[0];
-        if (!file) {
-            alert("Please select a file!");
-            return;
-        }
-    
-        const formData = new FormData();
-        formData.append("file", file);
-    
-        try {
-            const response = await fetch("http://localhost:5000/upload", {
-                method: "POST",
-                body: formData
-            });
-    
-            const result = await response.json();
-            alert("File uploaded successfully!");
-            console.log(result);
-        } catch (error) {
-            console.error("Error uploading file:", error);
-        }
-    }
-</script>
+    <script>
+            // Upload file function
+            async function uploadFile() {
+                const fileInput = document.getElementById("fileInput");
+                const formType = document.getElementById("formType").value;
+                const file = fileInput.files[0];
+
+                if (!file) {
+                    alert("Please select a file!");
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append("file", file);
+                formData.append("formType", formType); // Send form type
+
+                try {
+                    const response = await fetch("http://localhost:3000/upload/forms", {  
+                    method: "POST",
+                    body: formData
+                });
+
+                    const result = await response.json();
+                    alert("File uploaded successfully!");
+                    console.log(result);
+                } catch (error) {
+                    console.error("Error uploading file:", error);
+                }
+            }
+    </script>  
+    <script src="/js/script.js"></script>
 </body>
 </html>

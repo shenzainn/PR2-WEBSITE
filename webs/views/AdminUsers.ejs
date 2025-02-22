@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
+    <link rel="stylesheet" href="/css/admin.css">
+</head>
+
+<body>
+    <button id="menu-toggle">☰</button>
+    <section id = "sidebar">
+        <div class="logo">
+            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+            
+        </div>
+        
+        <div class = "items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+        </div>
+    </section>
+
+    <section id="main-content">
+        <h2>Manage Students</h2>
+        
+        <div class="add-student-container">
+            <input type="text" id="studentNumber" placeholder="Student Number">
+            <input type="text" id="studentName" placeholder="Full Name">
+            <input type="email" id="studentEmail" placeholder="Email">
+            <button onclick="addStudent()">Add Student</button>
+        </div>
+    
+        <h3>Student List</h3>
+        <ul id="studentList"></ul>
+    </section>
+    
+    <script>
+        async function fetchStudents() {
+            const response = await fetch("/admin/users");
+            const students = await response.json();
+            const studentList = document.getElementById("studentList");
+    
+            studentList.innerHTML = "";
+            students.forEach(student => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    ${student.studentNumber} - ${student.name} (${student.email})
+                    <button onclick="removeStudent('${student._id}')">Remove</button>
+                `;
+                studentList.appendChild(li);
+            });
+        }
+    
+        async function addStudent() {
+            const studentNumber = document.getElementById("studentNumber").value;
+            const studentName = document.getElementById("studentName").value;
+            const studentEmail = document.getElementById("studentEmail").value;
+    
+            if (!studentNumber || !studentName || !studentEmail) {
+                alert("All fields are required!");
+                return;
+            }
+    
+            const response = await fetch("/admin/users", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ studentNumber, name: studentName, email: studentEmail })
+            });
+    
+            const result = await response.json();
+            alert(result.message);
+            fetchStudents();
+        }
+    
+        async function removeStudent(id) {
+            const response = await fetch(`/admin/users/${id}`, { method: "DELETE" });
+            const result = await response.json();
+            alert(result.message);
+            fetchStudents();
+        }
+    
+        fetchStudents();
+    </script>
+    <script src="/js/script.js"></script>    
+</body>
+</html>

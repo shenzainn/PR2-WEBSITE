@@ -1,17 +1,14 @@
+require("dotenv").config(); // Load environment variables
+
 const mongoose = require("mongoose");
 
 const conn = () => {
-  mongoose.connect(process.env.DB_URL, {
-    dbName: "example1",
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("DB_CONNECT");
-  })
-  .catch((err) => {
-    console.log("DB DON'T CONNECT: " + err);
-  });
+  const dbURL = process.env.DB_URL || "mongodb://localhost:27017/PR2_Website"; // Default to local MongoDB if env variable is missing
+
+ mongoose
+   .connect(dbURL)
+   .then(() => console.log("MongoDB connected."))
+   .catch((err) => console.error("DB DON'T CONNECT:", err));
 };
 
-module.exports = {conn}
+module.exports = { conn };
