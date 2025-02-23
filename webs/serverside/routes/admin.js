@@ -1,14 +1,14 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = express.Router();
+
 /*
 1. ../ reroutes to serverside folder immediately
 2. select folder name first before file name
 */
-const { conn } = require("../routes/db");  // Import DB connection
 const RequestModel = require('../models/request');
+const Student = require("../models/student");
 
-conn();  // Ensure DB connection
 
 const portNum = process.env.port || 3000;
 const localIP = '192.168.1.13'; 
@@ -51,20 +51,22 @@ router.get('/manage', (req, res) => {
 })
 
 // declare routes
-const Student = mongoose.model("Student", new mongoose.Schema({
+const studentSchema = new mongoose.Schema({
     studentNumber: { type: String, required: true, unique: true },
     name: { type: String, required: true },
     email: { type: String, required: true }
-}), "studentUsers");
+  });
+
+// Prevent OverwriteModelError by checking if the model already exists
+module.exports = mongoose.models.Student || mongoose.model("Student", studentSchema);
 
   
  // Get all students
-router.get("/users", async (req, res) => {
+ router.get("/users", async (req, res) => {
     const students = await Student.find();
     res.json(students);
 });
 
-// Add a student
 router.post("/users", async (req, res) => {
     const { studentNumber, name, email } = req.body;
     if (!studentNumber || !name || !email) {
@@ -80,7 +82,6 @@ router.post("/users", async (req, res) => {
     }
 });
 
-// Remove a student
 router.delete("/users/:id", async (req, res) => {
     await Student.findByIdAndDelete(req.params.id);
     res.json({ message: "Student removed successfully" });

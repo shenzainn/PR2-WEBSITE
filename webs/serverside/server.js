@@ -11,11 +11,11 @@ require("dotenv").config();
 const app = express();
 
 // MongoDB Connection
-const mongoURI = "mongodb://localhost:27017/mydatabase";
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+const mongoURI = "mongodb://localhost:27017/PR2_Website";
+
+mongoose.connect(mongoURI)
+  .then(() => console.log("MongoDB Connected."))
+  .catch(err => console.error("MongoDB Connection Error:", err));
 
 const conn = mongoose.connection;
 let bucket;
@@ -35,13 +35,8 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 // Student Schema
-const studentSchema = new mongoose.Schema({
-    studentNumber: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
-});
 
-const Student = mongoose.model("Student", studentSchema) ;
-require ("/models/Student");
+
 
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {
@@ -149,6 +144,21 @@ app.get("/files/:filename", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // ejs setup
 app.use(express.json());
 app.set("views", path.join(__dirname, "../views"));
@@ -161,6 +171,19 @@ app.use("/students", studentRouter);
 const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Serve main page
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
@@ -168,7 +191,6 @@ app.get("/", (req, res) => {
   res.render("index", { portNum, localIP });
 });
 
-const port = process.env.PORT || 3000;
 app.listen(3000, () => {
   console.log("https://localhost:" + 3000);
 });

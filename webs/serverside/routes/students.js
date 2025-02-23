@@ -7,17 +7,14 @@ const router = express.Router();
 2. select folder name first before file name
 */
 
-const { conn } = require("../routes/db");  // Import DB connection
 const Request = require("../models/request");
-
-conn();  // Ensure DB connection
 
 const portNum = process.env.port || 3000;
 const localIP = '192.168.1.13'; 
 
 router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });
-})
+});
 
 router.get('/track', async (req, res) => {
     res.render("StudentTracking.ejs",{portNum, localIP })
