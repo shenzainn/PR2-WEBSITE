@@ -40,7 +40,8 @@ const studentSchema = new mongoose.Schema({
     password: { type: String, required: true },
 });
 
-const Student = mongoose.model("Student", studentSchema) require("/models/Student");;
+const Student = mongoose.model("Student", studentSchema) ;
+require ("/models/Student");
 
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {
