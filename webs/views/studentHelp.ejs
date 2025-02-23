@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Help</title>
     <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
@@ -19,12 +19,34 @@
         </div>
         
         <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
     </section>
+
+    <section id="main-content">
+        <h2>Help & Support</h2>
+        <div class="faq">
+            <h3>Frequently Asked Questions</h3>
+            <details>
+                <summary>How do I track my documents?</summary>
+                <p>Go to the "Track" tab in the sidebar to view your document status.</p>
+            </details>
+            <details>
+                <summary>How do I send messages?</summary>
+                <p>Navigate to the "Messages" tab to communicate with admins or users.</p>
+            </details>
+            <details>
+                <summary>Where can I change my settings?</summary>
+                <p>Click on the "Settings" tab to modify your preferences.</p>
+            </details>
+        </div>
+    </section>
+    
+
+    <script src="/js/script.js"></script>    
 </body>
 </html>
