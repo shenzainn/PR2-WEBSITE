@@ -11,50 +11,62 @@
 
 <body>
     <button id="menu-toggle">☰</button>
-    <section id = "sidebar">
+    <section id="sidebar">
         <div class="logo">
-            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
         
-        <div class = "items">
+        <ul class="items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track" class="active">Track</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
-        </div>
+        </ul>
     </section>
 
-    <h2>Admin - Manage Requests</h2>
+    <main id="main-content">
+        <h2>Admin - Manage Requests</h2>
 
         <% if (requests && requests.length > 0) { %> 
-            <table border="1">
-                <tr>
-                    <th>Student Name</th>
-                    <th>Status</th>
-                    <th>Action</th>
-                </tr>
-                <% requests.forEach(request => { %>
-                    <tr>
-                        <td><%= request.studentName %></td>
-                        <td><%= request.requestStatus %></td>
-                        <td>
-                            <form action="/approve-request/<%= request._id %>" method="POST">
-                                <button type="submit">Approve</button>
-                            </form>
-                            <form action="/reject-request/<%= request._id %>" method="POST">
-                                <button type="submit">Reject</button>
-                            </form>
-                        </td>
-                    </tr>
-                <% }) %>
-            </table>
+            <div class="request-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% requests.forEach(request => { %>
+                            <tr>
+                                <td><%= request.studentName %></td>
+                                <td>
+                                    <span class="status <%= request.requestStatus.toLowerCase() %>">
+                                        <%= request.requestStatus %>
+                                    </span>
+                                </td>
+                                <td class="action-buttons">
+                                    <form action="/approve-request/<%= request._id %>" method="POST">
+                                        <button class="approve">Approve</button>
+                                    </form>
+                                    <form action="/reject-request/<%= request._id %>" method="POST">
+                                        <button class="reject">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
         <% } else { %> 
-            <p>No requests found.</p>
+            <p class="no-requests">No requests found.</p>
         <% } %>
+    </main>
+
     <script src="/js/script.js"></script>    
 </body>
 </html>
