@@ -59,29 +59,38 @@ document.addEventListener("DOMContentLoaded", function () {
 */
 
 
-// Select theme buttons
-const lightModeBtn = document.getElementById("light-mode");
-const darkModeBtn = document.getElementById("dark-mode");
+// Dark Mode Toggle
+document.addEventListener("DOMContentLoaded", function () {
+    const toggleSwitch = document.getElementById("dark-mode-toggle"); // Ensure you have an element with this ID
+    const body = document.body;
 
-// Function to enable Dark Mode
-function enableDarkMode() {
-    document.body.classList.add("dark-mode");
-    localStorage.setItem("theme", "dark"); // Save user preference
+    // Check if user has a saved preference for dark mode
+    if (localStorage.getItem("darkMode") === "enabled") {
+        body.classList.add("dark-mode");
+        toggleSwitch.checked = true; // If using a switch input
+    }
+
+    // Toggle function
+    toggleSwitch.addEventListener("change", function () {
+        if (this.checked) {
+            body.classList.add("dark-mode");
+            localStorage.setItem("darkMode", "enabled");
+        } else {
+            body.classList.remove("dark-mode");
+            localStorage.setItem("darkMode", "disabled");
+        }
+    });
+});
+
+
+// Password Change (Mock function for UI only)
+function changePassword() {
+    let currentPass = document.getElementById("current-password").value;
+    let newPass = document.getElementById("new-password").value;
+
+    if (currentPass && newPass) {
+        alert("Password updated successfully! (This is a UI demo)");
+    } else {
+        alert("Please fill in both password fields.");
+    }
 }
-
-// Function to enable Light Mode
-function enableLightMode() {
-    document.body.classList.remove("dark-mode");
-    localStorage.setItem("theme", "light"); // Save user preference
-}
-
-// Check for saved theme preference
-const savedTheme = localStorage.getItem("theme");
-if (savedTheme === "dark") {
-    enableDarkMode();
-}
-
-// Add event listeners
-darkModeBtn.addEventListener("click", enableDarkMode);
-lightModeBtn.addEventListener("click", enableLightMode);
-
