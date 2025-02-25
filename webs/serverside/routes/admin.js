@@ -49,6 +49,14 @@ router.get('/user', (req, res) => {
 router.get('/manage', (req, res) => {
     res.render("AdminUsers.ejs",{portNum, localIP })
 })
+router.get("/track", async (req, res) => {
+    if (!req.session.student || req.session.student.role !== "admin") {
+        return res.redirect("/login");
+    }
+
+    const requests = await Request.find();
+    res.render("AdminTracking", { requests });
+});
 
 // declare routes
 const studentSchema = new mongoose.Schema({
@@ -56,6 +64,9 @@ const studentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true }
   });
+//Tracking
+  const requests = await Request.find();
+    res.render("AdminTracking", { requests });
 
 // Prevent OverwriteModelError by checking if the model already exists
 module.exports = mongoose.models.Student || mongoose.model("Student", studentSchema);

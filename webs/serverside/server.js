@@ -119,8 +119,8 @@ app.get("/files/:filename", async (req, res) => {
 });
 
 // Student Model (Ensure you have this defined)
-const Student = require("./models/Student");
-const Request = require("./models/Request");
+const Student = require("./models/student");
+const Request = require("./models/request");
 
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {

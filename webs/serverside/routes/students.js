@@ -55,6 +55,27 @@ router.get('/message', (req, res) => {
 router.get('/help', (req, res) => {
     res.render("StudentHelp.ejs",{portNum, localIP })
 })
+router.get("/tracking", async (req, res) => {
+    if (!req.session.student) {
+        return res.redirect("/login");
+    }
+
+//Tracking
+const requests = await Request.find({ studentNumber: req.session.student.studentNumber });
+
+res.render("StudentTracking", { requests });
+
+//Submit
+const { formType } = req.body;
+
+    const newRequest = new Request({
+        studentNumber: req.session.student.studentNumber,
+        formType
+    });
+
+    await newRequest.save();
+    res.redirect("/students/tracking");
+});
 
 
 
