@@ -18,10 +18,13 @@ router.get('/', function (req, res) {
 })
 
 router.get("/track", async (req, res) => {
+    if (!req.session.student || req.session.student.role !== "admin") {
+        return res.redirect("/login");
+    }
+
     try {
         const requests = await RequestModel.find();
-        console.log("Requests fetched:", requests);
-        res.render("AdminTracking.ejs", { portNum, localIP, requests });
+        res.render("AdminTracking.ejs", { requests });
     } catch (error) {
         console.error("Error fetching requests:", error);
         if (!res.headersSent) {
@@ -64,9 +67,6 @@ const studentSchema = new mongoose.Schema({
     name: { type: String, required: true },
     email: { type: String, required: true }
   });
-//Tracking
-  const requests = await Request.find();
-    res.render("AdminTracking", { requests });
 
 // Prevent OverwriteModelError by checking if the model already exists
 module.exports = mongoose.models.Student || mongoose.model("Student", studentSchema);
