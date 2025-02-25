@@ -528,3 +528,54 @@ input:checked + .slider {
 input:checked + .slider::before {
     transform: translateX(26px);
 }
+
+#main-content {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.add-user-container, .dashboard-overview {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-user-container input, .add-user-container select, .add-user-container button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#userList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userList th, #userList td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#userList th {
+    background-color: #f1f1f1;
+}
+
+tr {
+    color: black;
+}
+
+.stat {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.stat h3 {
+    margin: 0;
+}
