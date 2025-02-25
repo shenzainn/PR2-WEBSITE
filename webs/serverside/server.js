@@ -74,15 +74,15 @@ app.post("/upload/forms", upload.single("file"), async (req, res) => {
     readableStream.pipe(uploadStream);
 
     uploadStream.on("finish", () => {
-      res.json({ message: "✅ File uploaded successfully!", fileId: uploadStream.id });
+      res.json({ message: "File uploaded successfully!", fileId: uploadStream.id });
     });
 
     uploadStream.on("error", (err) => {
-      console.error("❌ Error saving file:", err);
+      console.error("Error saving file:", err);
       res.status(500).json({ error: "Server error while saving file." });
     });
   } catch (error) {
-    console.error("❌ Error uploading file:", error);
+    console.error("Error uploading file:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -96,7 +96,7 @@ app.get("/files", async (req, res) => {
     }
     res.json(files);
   } catch (error) {
-    console.error("❌ Error fetching files:", error);
+    console.error("Error fetching files:", error);
     res.status(500).send("Error fetching files");
   }
 });
@@ -106,7 +106,7 @@ app.get("/files/:filename", async (req, res) => {
   try {
     const file = await conn.db.collection("forms.files").findOne({ filename: req.params.filename });
     if (!file) {
-      return res.status(404).send("❌ File not found");
+      return res.status(404).send("File not found");
     }
 
     res.setHeader("Content-Type", file.metadata.contentType);
@@ -119,9 +119,8 @@ app.get("/files/:filename", async (req, res) => {
 });
 
 // Student Model (Ensure you have this defined)
-const Student = require("./models/Student");
-const Request = require("./models/Request");
-
+const Student = require("./models/student");
+const Request = require("./models/request");
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {
     const { studentNumber, password } = req.body;
@@ -187,7 +186,7 @@ app.use("/admin", adminRouter);
 // Serve main page
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.74.73"; // change to your actual local IP
+  const localIP = "192.168.76.73"; // change to your actual local IP
   res.render("index", { portNum, localIP });
 });
 
