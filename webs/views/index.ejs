@@ -8,52 +8,13 @@
     <link rel="stylesheet" href="/css/login.css">
 </head>
 <body>
-    <div class="container" id="signUp" style="display:none;">
-     <h1 class="form-title">Register</h1>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text" name="fName" id="fName" placeholder="First Name" required>
-            <label for="fname">First Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-user"></i>
-            <input type="text" name="lName" id="lName" placeholder="Last Name" required>
-            <label for="lName">Last Name</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-envelope"></i>
-            <input type="email" name="email" id="email" placeholder="Email" required>
-            <label for="email">Email</label>
-        </div>
-        <div class="input-group">
-            <i class="fa-regular fa-id-card"></i>
-            <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> <label for="StudentNumber"></label>
-            <label for="email">Student Number</label>
-        </div>
-        <div class="input-group">
-            <i class="fas fa-lock"></i>
-            <input type="password" id="password" placeholder="Password" required>
-            <label for="password">Password</label>
-        </div>
-        <input type="submit" class="btn" value="Sign Up" name="signUp">
-     </form>
-     <div>
-        <div class="icons">
-        </div>
-        <div class="links">
-        <p>Already Have Accouts?</p>
-            <button id="signInButton">Sign In</button>
-        </div>
-    </div>
-</div>
-
     <div class="container" id="signIn">
         <h1 class="form-title"><img src="/images/EduVault UI Design-modified.png">EduVault</h1>
-    <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Sign in to start your session</p>
        <div class="input-group">
         <i class="fa-regular fa-id-card"></i>
-        <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> <label for="StudentNumber"></label>
-           <label for="email">Student Number</label>
+        <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> 
+        <label for="StudentNumber">Student Number</label>
        </div>
        <div class="input-group">
            <i class="fas fa-lock"></i>
@@ -63,7 +24,7 @@
        <p class="recover">
         <a href="#">Forgot Password?</a>
        </p>
-       <input type="submit" class="btn" value="Sign In" name="signIn">
+       <input type="submit" class="btn" value="Sign In" name="signIn" onclick="loginUser()">
     </form>
     <div>
        <p class="or">
@@ -72,12 +33,33 @@
        <div class="icons">
         <i class="fa-brands fa-google"></i>
        </div>
-       <div class="links">
-       <p>Don't Have Accout yet?</p>
-           <button id="signUpButton">Sign Up</button>
-       </div>
-   </div>
+    </div>
 </div>
+    <script>
+        async function loginUser() {
+            const studentNumber = document.getElementById('StudentNumber').value;
+            const password = document.getElementById('password').value;
+            
+            const response = await fetch('http://localhost:3000/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ studentNumber, password })
+            });
+            
+            const data = await response.json();
+            if (data.success) {
+                if (data.role === 'admin') {
+                    window.location.href = '/AdminHome.ejs';
+                } else {
+                    window.location.href = '/StudentHome.ejs';
+                }
+            } else {
+                alert('Login failed. Please check your credentials.');
+            }
+        }
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
