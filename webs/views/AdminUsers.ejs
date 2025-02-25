@@ -6,6 +6,11 @@
     <title>Messages</title>
     <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
     <link rel="stylesheet" href="/css/admin.css">
+    <style>
+        tr {
+            color: black !important; /* Ensures text inside table rows is black */
+        }
+    </style>
 </head>
 
 <body>
@@ -15,79 +20,71 @@
             <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
             <h1>EduVault</h1>
             <h2>Structured Document Management System</h2>
-            
         </div>
         
-        <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/message">Messages</a></li>
+        <div class="items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/docManage">Manage Documents</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track Requests</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/userList">User Management</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
         </div>
     </section>
 
     <section id="main-content">
-        <h2>Manage Students</h2>
+        <h2>User Management</h2>
         
-        <div class="add-student-container">
-            <input type="text" id="studentNumber" placeholder="Student Number">
-            <input type="text" id="studentName" placeholder="Full Name">
-            <input type="email" id="studentEmail" placeholder="Email">
-            <button onclick="addStudent()">Add Student</button>
+        <div class="dashboard-overview">
+            <div class="stat">
+                <h3>Total Users</h3>
+                <p id="totalUsers">0</p>
+            </div>
+            <div class="stat">
+                <h3>Active Users</h3>
+                <p id="activeUsers">0</p>
+            </div>
+            <div class="stat">
+                <h3>Pending Invitations</h3>
+                <p id="pendingInvitations">0</p>
+            </div>
+            <input type="text" id="searchBar" placeholder="Search Users">
+        </div>
+        
+        <div class="add-user-container">
+            <input type="text" id="userNumber" placeholder="User Number">
+            <input type="text" id="userName" placeholder="Full Name">
+            <input type="email" id="userEmail" placeholder="Email">
+            <select id="userRole">
+                <option value="Admin">Admin</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Student">Student</option>
+            </select>
+            <select id="userStatus">
+                <option value="Active">Active</option>
+                <option value="Inactive">Inactive</option>
+            </select>
+            <button onclick="addUser()">Add User</button>
         </div>
     
-        <h3>Student List</h3>
-        <ul id="studentList"></ul>
+        <h3>User List</h3>
+        <table id="userList">
+            <thead>
+                <tr>
+                    <th>User Number</th>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- User rows will be inserted here by JavaScript -->
+            </tbody>
+        </table>
     </section>
-    
-    <script>
-        async function fetchStudents() {
-            const response = await fetch("/admin/users");
-            const students = await response.json();
-            const studentList = document.getElementById("studentList");
-    
-            studentList.innerHTML = "";
-            students.forEach(student => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    ${student.studentNumber} - ${student.name} (${student.email})
-                    <button onclick="removeStudent('${student._id}')">Remove</button>
-                `;
-                studentList.appendChild(li);
-            });
-        }
-    
-        async function addStudent() {
-            const studentNumber = document.getElementById("studentNumber").value;
-            const studentName = document.getElementById("studentName").value;
-            const studentEmail = document.getElementById("studentEmail").value;
-    
-            if (!studentNumber || !studentName || !studentEmail) {
-                alert("All fields are required!");
-                return;
-            }
-    
-            const response = await fetch("/admin/users", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ studentNumber, name: studentName, email: studentEmail })
-            });
-    
-            const result = await response.json();
-            alert(result.message);
-            fetchStudents();
-        }
-    
-        async function removeStudent(id) {
-            const response = await fetch(`/admin/users/${id}`, { method: "DELETE" });
-            const result = await response.json();
-            alert(result.message);
-            fetchStudents();
-        }
-    
-        fetchStudents();
-    </script>
+
     <script src="/js/script.js"></script>    
 </body>
 </html>

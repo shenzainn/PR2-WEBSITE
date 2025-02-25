@@ -31,23 +31,29 @@
     <!-- Main Content -->
     <section id="main-content">
         <h1>Settings</h1>
-
-        <!-- Profile Settings -->
-        <div class="settings-section">
-            <h2>Profile</h2>
-            <div class="profile-container">
-                <img id="profile-pic" src="/images/UE_RED_SEAL.png" alt="Profile Picture">
-                <input type="file" id="profile-upload" accept="image/*">
-                <input type="text" id="profile-name" placeholder="Enter your name">
+        
+        <div class="settings-container">
+            <!-- Password Change Card -->
+            <div class="settings-card">
+                <h2>Change Password</h2>
+                <input type="password" id="current-password" placeholder="Current Password">
+                <input type="password" id="new-password" placeholder="New Password">
+                <button onclick="changePassword()">Update Password</button>
             </div>
-        </div>
 
-        <!-- Theme Settings -->
-        <div class="settings-section">
-            <h2>Theme</h2>
-            <div class="theme-options">
-                <button id="light-mode">Light Mode</button>
-                <button id="dark-mode">Dark Mode</button>
+            <div class="settings-card">
+                <h2>Logout</h2>
+                <button id="logout-button">Logout</button>
+            </div>
+    
+            <!-- Dark Mode Toggle -->
+            <div class="settings-card">
+                <h2>Theme</h2>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <p>Enable Dark Mode</p>
             </div>
         </div>
     </section>

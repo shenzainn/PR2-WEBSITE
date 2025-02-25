@@ -311,3 +311,271 @@ button.reject {
 }
 
 /*tracking css end*/
+
+/*settings*/
+.settings-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.settings-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.settings-card h2 {
+    color: #8b0000;
+    margin-bottom: 15px;
+}
+
+.settings-card input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.settings-card button {
+    background: #8b0000;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.settings-card button:hover {
+    background: #a40000;
+}
+
+/* Dark Mode */
+/* Apply dark mode to the entire body */
+.dark-mode {
+    background: #222;
+    color: white;
+}
+
+/* Make text readable inside all dark-mode sections */
+.dark-mode h1, 
+.dark-mode h2, 
+.dark-mode h3, 
+.dark-mode h4, 
+.dark-mode h5, 
+.dark-mode h6, 
+.dark-mode p, 
+.dark-mode a {
+    color: white;
+}
+
+/* Fix sidebar colors in dark mode */
+.dark-mode #sidebar {
+    background: #333;
+}
+
+.dark-mode #sidebar .items li a {
+    color: white;
+}
+
+.dark-mode #sidebar .items li a:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: black;
+}
+
+/* Update main content and cards */
+.dark-mode #main-content {
+    background: #333;
+    color: white;
+}
+
+.dark-mode .settings-card {
+    background: #444;
+    color: white;
+}
+
+.dark-mode .settings-card input {
+    background: #555;
+    color: white;
+    border: 1px solid white;
+}
+
+.dark-mode .action-card {
+    background: #444;
+    color: white;
+}
+
+/* Dark mode for tables */
+.dark-mode table {
+    background: #444;
+}
+
+.dark-mode th {
+    background: #a40000;
+}
+
+.dark-mode td {
+    color: white;
+}
+
+/* Dark mode for the FAQ container */
+.dark-mode .faq {
+    background: #333;  /* Dark background */
+    color: white;
+    box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode for FAQ headings */
+.dark-mode .faq h3 {
+    color: #ff6666;  /* Lighter red for better contrast */
+}
+
+/* Dark mode for details container */
+.dark-mode details {
+    background: #444;  /* Darker background */
+    color: white;
+    border: 1px solid #bbb;
+}
+
+/* Dark mode for expanded details */
+.dark-mode details[open] {
+    background: #555;
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
+}
+
+/* Dark mode for summary (clickable question) */
+.dark-mode summary {
+    color: #ff9999;
+}
+
+/* Adjust the arrow color for dark mode */
+.dark-mode summary::before {
+    color: white;
+}
+
+/* Dark mode hover effect for better visibility */
+.dark-mode summary:hover {
+    color: #ffcccc;
+}
+
+
+/* Button adjustments */
+.dark-mode button {
+    background: #a40000;
+    color: white;
+}
+
+.dark-mode button:hover {
+    background: #8b0000;
+}
+
+/* Dark mode for search bar */
+.dark-mode .search-section input {
+    background: #444;
+    color: white;
+    border: 1px solid white;
+}
+
+/* Toggle Switch */
+.toggle-switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #ccc;
+    border-radius: 24px;
+    transition: 0.4s;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    height: 16px;
+    width: 16px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background: #8b0000;
+}
+
+input:checked + .slider::before {
+    transform: translateX(26px);
+}
+
+#main-content {
+    margin-left: 270px;
+    padding: 20px;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+.add-user-container, .dashboard-overview {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.add-user-container input, .add-user-container select, .add-user-container button {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#userList {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#userList th, #userList td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+#userList th {
+    background-color: #f1f1f1;
+}
+
+tr {
+    color: black;
+}
+
+.stat {
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f9f9f9;
+}
+
+.stat h3 {
+    margin: 0;
+}
