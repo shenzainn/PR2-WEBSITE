@@ -1,13 +1,13 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from "express";
+import mongoose from "mongoose";
 const router = express.Router();
 
 /*
 1. ../ reroutes to serverside folder immediately
 2. select folder name first before file name
 */
-const RequestModel = require('../models/request');
-const Student = require("../models/student");
+import Request from "../models/request.js";
+import Student from "../models/student.js";
 
 
 const portNum = process.env.port || 3000;
@@ -98,5 +98,5 @@ router.delete("/users/:id", async (req, res) => {
     res.json({ message: "Student removed successfully" });
 });
 
-module.exports = router;
+export default router;
 

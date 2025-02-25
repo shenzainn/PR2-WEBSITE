@@ -1,5 +1,5 @@
-const mongoose = require("mongoose");
-const bcrypt = require("bcryptjs");
+import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const studentSchema = new mongoose.Schema({
   studentNumber: { type: String, required: true, unique: true },
@@ -22,4 +22,4 @@ studentSchema.methods.comparePassword = function (password) {
   
 const Student = mongoose.models.Student || mongoose.model("Student", studentSchema);
 
-module.exports = Student;
+export default Student;

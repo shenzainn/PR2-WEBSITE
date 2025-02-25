@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const requestSchema = new mongoose.Schema({
     studentNumber: { type: String, required: true }, // Links to Student
@@ -9,6 +9,5 @@ const requestSchema = new mongoose.Schema({
     submittedAt: { type: Date, default: Date.now }
 });
 
-const Request = mongoose.models.Request || mongoose.model("Request", requestSchema);
-
-module.exports = Request;
+const Request = mongoose.model("Request", requestSchema);
+export default Request;

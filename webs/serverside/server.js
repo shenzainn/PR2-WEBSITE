@@ -1,14 +1,15 @@
-const express = require("express");
-const path = require("path");
-const mongoose = require("mongoose");
-const multer = require("multer");
-const { GridFSBucket } = require("mongodb");
-const bcrypt = require("bcryptjs");
-const session = require("express-session");
-const cors = require("cors");
-const crypto = require("crypto");
-const { Readable } = require("stream");
-require("dotenv").config();
+import express from "express";
+import path from "path";
+import mongoose from "mongoose";
+import multer from "multer";
+import { GridFSBucket } from "mongodb";
+import bcrypt from "bcryptjs";
+import session from "express-session";
+import cors from "cors";
+import crypto from "crypto";
+import { Readable } from "stream";
+import dotenv from "dotenv";
+dotenv.config();
 
 const app = express();
 
@@ -17,10 +18,19 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// MongoDB Connection
-const mongoURI = "mongodb://localhost:27017/PR2_Website";
+app.get("/", (req, res) => {
+  const portNum = process.env.PORT || 3000;
+  const localIP = "192.168.1.13"; // change to your actual local IP
+  res.render("index", { portNum, localIP });
+});
 
-mongoose.connect(mongoURI)
+// MongoDB Connection
+const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/PR2_Website";
+
+mongoose.connect(mongoURI,{
+  serverSelectionTimeoutMS: 10000, // 10 seconds
+  socketTimeoutMS: 120000 // 120 seconds
+})
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("MongoDB Connection Error:", err));
 
@@ -74,15 +84,15 @@ app.post("/upload/forms", upload.single("file"), async (req, res) => {
     readableStream.pipe(uploadStream);
 
     uploadStream.on("finish", () => {
-      res.json({ message: "✅ File uploaded successfully!", fileId: uploadStream.id });
+      res.json({ message: "File uploaded successfully!", fileId: uploadStream.id });
     });
 
     uploadStream.on("error", (err) => {
-      console.error("❌ Error saving file:", err);
+      console.error("Error saving file:", err);
       res.status(500).json({ error: "Server error while saving file." });
     });
   } catch (error) {
-    console.error("❌ Error uploading file:", error);
+    console.error("Error uploading file:", error);
     res.status(500).json({ error: "Server error" });
   }
 });
@@ -96,7 +106,7 @@ app.get("/files", async (req, res) => {
     }
     res.json(files);
   } catch (error) {
-    console.error("❌ Error fetching files:", error);
+    console.error("Error fetching files:", error);
     res.status(500).send("Error fetching files");
   }
 });
@@ -106,7 +116,7 @@ app.get("/files/:filename", async (req, res) => {
   try {
     const file = await conn.db.collection("forms.files").findOne({ filename: req.params.filename });
     if (!file) {
-      return res.status(404).send("❌ File not found");
+      return res.status(404).send("File not found");
     }
 
     res.setHeader("Content-Type", file.metadata.contentType);
@@ -119,9 +129,8 @@ app.get("/files/:filename", async (req, res) => {
 });
 
 // Student Model (Ensure you have this defined)
-const Student = require("./models/student");
-const Request = require("./models/request");
-
+import Student from "./models/student.js";
+import Request from "./models/request.js";
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {
     const { studentNumber, password } = req.body;
@@ -173,23 +182,25 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
+
+// Define __dirname in ES module
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+
 // ejs setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "../public")));
 
-const studentRouter = require("./routes/students");
+import studentRouter from "./routes/students.js";
+import adminRouter from "./routes/admin.js";
+
 app.use("/students", studentRouter);
-
-const adminRouter = require("./routes/admin");
 app.use("/admin", adminRouter);
-
 // Serve main page
-app.get("/", (req, res) => {
-  const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.74.73"; // change to your actual local IP
-  res.render("index", { portNum, localIP });
-});
+
 
 app.listen(3000, () => {
   console.log("Server running at http://localhost:3000");

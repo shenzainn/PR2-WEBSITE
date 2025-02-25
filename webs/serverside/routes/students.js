@@ -1,5 +1,5 @@
-const express = require('express');
 const router = express.Router();
+import express from "express";
 // how to route files 
 
 /*
@@ -7,7 +7,7 @@ const router = express.Router();
 2. select folder name first before file name
 */
 
-const Request = require("../models/request");
+import Request from "../models/request.js";
 
 const portNum = process.env.port || 3000;
 const localIP = '192.168.1.13'; 
@@ -79,5 +79,4 @@ const { formType } = req.body;
 
 
 
-
-module.exports = router;
+export default router;
