@@ -25,10 +25,11 @@ app.get("/", (req, res) => {
 });
 
 // MongoDB Connection
-const mongoURI = "mongodb://127.0.0.1:27017/PR2_Website";
+const mongoURI = "mongodb://localhost:27017/PR2_Website";
 
 mongoose.connect(mongoURI,{
-  serverSelectionTimeoutMS: 30000,
+  serverSelectionTimeoutMS: 100000, // 100 seconds
+  socketTimeoutMS: 120000 // 120 seconds
 })
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.error("MongoDB Connection Error:", err));
