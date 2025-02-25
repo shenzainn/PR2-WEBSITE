@@ -424,38 +424,6 @@ button.reject {
 .dark-mode td {
     color: white;
 }
-/* Apply dark mode to the help tab card */
-.dark-mode .help-card {
-    background: #444;  /* Dark background */
-    color: white;
-    border: 1px solid white;
-}
-
-/* Dark mode for text inside the help tab */
-.dark-mode .help-card h1,
-.dark-mode .help-card h2,
-.dark-mode .help-card h3,
-.dark-mode .help-card p {
-    color: white;
-}
-
-/* Dark mode for help tab buttons */
-.dark-mode .help-card button {
-    background: #a40000;
-    color: white;
-}
-
-.dark-mode .help-card button:hover {
-    background: #8b0000;
-}
-
-/* Dark mode for help tab input fields */
-.dark-mode .help-card input,
-.dark-mode .help-card textarea {
-    background: #555;
-    color: white;
-    border: 1px solid white;
-}
 
 /* Dark mode for the FAQ container */
 .dark-mode .faq {
