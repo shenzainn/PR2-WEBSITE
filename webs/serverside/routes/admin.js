@@ -47,6 +47,9 @@ router.get("/message", (req, res) => {
 router.get("/docManage", (req, res) => {
     res.render("AdminManageDocs.ejs", { portNum, localIP });
 });
+router.get("/help", (req, res) => {
+    res.render("AdminHelp.ejs", { portNum, localIP });
+});
 
 // Route: Add a New User
 router.post("/users", async (req, res) => {
