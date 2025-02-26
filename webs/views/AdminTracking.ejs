@@ -31,7 +31,7 @@
     <main id="main-content">
         <h2>Admin - Manage Requests</h2>
 
-        <% if (requests && requests.length > 0) { %> 
+        <% if (typeof requests !== "undefined" && requests.length > 0) { %>
             <div class="request-table">
                 <table>
                     <thead>
@@ -42,7 +42,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% requests.forEach(request => { %>
+                        <% request.forEach(request => { %>
                             <tr>
                                 <td><%= request.studentName %></td>
                                 <td>

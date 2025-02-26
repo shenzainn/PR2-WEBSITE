@@ -24,8 +24,16 @@ router.get("/user", async (req, res) => {
         res.render("AdminUsers.ejs", { portNum, localIP, users: [] });
     }
 });
-router.get("/track", (req, res) => {
+router.get("/track", async (req, res) => {
     res.render("AdminTracking.ejs", { portNum, localIP });
+
+    try {
+        const requests = await RequestModel.find(); // Fetch all requests from DB
+        res.render("AdminTracking.ejs", { portNum, localIP, requests }); // Pass requests to EJS
+    } catch (error) {
+        console.error("Error fetching requests:", error);
+        res.status(500).send("Server Error");
+    }
 });
 router.get("/message", (req, res) => {
     res.render("AdminMessages.ejs", { portNum, localIP });
