@@ -9,7 +9,7 @@ const localIP = "192.168.76.73";
 
 router.use(express.json());
 
-//link routes
+//link routes, DO NOT DELETE ANYTHING
 router.get("/", (req, res) => {
     res.render("AdminHome.ejs", { portNum, localIP });
 });
@@ -23,6 +23,21 @@ router.get("/user", async (req, res) => {
         console.error("Error fetching users:", error);
         res.render("AdminUsers.ejs", { portNum, localIP, users: [] });
     }
+});
+router.get("/track", (req, res) => {
+    res.render("AdminTracking.ejs", { portNum, localIP });
+});
+router.get("/message", (req, res) => {
+    res.render("AdminMessages.ejs", { portNum, localIP });
+});
+router.get("/settings", (req, res) => {
+    res.render("AdminSettings.ejs", { portNum, localIP });
+});
+router.get("/message", (req, res) => {
+    res.render("AdminMessages.ejs", { portNum, localIP });
+});
+router.get("/docManage", (req, res) => {
+    res.render("AdminManageDocs.ejs", { portNum, localIP });
 });
 
 // Route: Add a New User

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Students</title>
-    <link rel="shortcut icon" type="image/png" href="/images/UE_RED_SEAL.png">
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
     <link rel="stylesheet" href="/css/admin.css">
 </head>
 
@@ -43,10 +43,17 @@
         </div>
 
         <h3>User List</h3>
-        <ul id="userList">
+        <label for="roleFilter">Filter by Role:</label>
+        <select id="roleFilter" onchange="filterUsers()">
+            <option value="all">All</option>
+            <option value="student">Students</option>
+            <option value="admin">Admins</option>
+        </select>
+
+        <ul id="userList" style="list-style-type: disc; padding-left: 20px;">
             <% if (users && users.length > 0) { %>
                 <% users.forEach(user => { %>
-                    <li>
+                    <li class="user-item" data-role="<%= user.role %>" style="list-style-type: disc;">
                         <%= user.studentNumber %> - <%= user.studentName %> (<%= user.email %>) - Role: <%= user.role %>
                         <button onclick="removeUser('<%= user._id %>')">Remove</button>
                     </li>
@@ -58,6 +65,17 @@
     </section>
 
     <script>
+        function filterUsers() {
+            const filterValue = document.getElementById("roleFilter").value;
+            const users = document.querySelectorAll(".user-item");
+
+            users.forEach(user => {
+                const userRole = user.getAttribute("data-role");
+                user.style.visibility = (filterValue === "all" || userRole === filterValue) ? "visible" : "hidden";
+                user.style.height = (filterValue === "all" || userRole === filterValue) ? "auto" : "0px"; // Prevents empty space
+            });
+        }
+
         async function addUser() {
             const studentNumber = document.getElementById("studentNumber").value;
             const studentName = document.getElementById("studentName").value;
