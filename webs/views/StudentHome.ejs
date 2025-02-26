@@ -51,12 +51,6 @@
             </div>
         </div>
 
-        <div class="search-section">
-            <h2>Search Your Documents</h2>
-            <input type="text" placeholder="Search by keyword or category...">
-            <button>Search</button>
-        </div>
-
         <% if (user && user.role === 'admin') { %>
             <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/admin/register'">Register Student</button>
         <% } %>

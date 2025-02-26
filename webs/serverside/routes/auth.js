@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const User = require('../models/User'); // Your User model
+const User = require('./models/user'); // Your User model
 const { isAdmin } = require('../middleware/auth'); // Middleware to check admin
 
 // Admin-only sign-up route
@@ -33,3 +33,4 @@ const isAdmin = (req, res, next) => {
 };
 
 module.exports = { isAdmin }; // thank you, seen it
+

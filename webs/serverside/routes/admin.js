@@ -5,10 +5,14 @@ import Student from "../models/student.js";
 
 const router = express.Router();
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.1.13";
+const localIP = "192.168.76.73";
 
 router.get("/", (req, res) => {
     res.render("AdminHome.ejs", { portNum, localIP });
+});
+
+router.get("/user", (req, res) => {
+    res.render("AdminUsers.ejs", { portNum, localIP });
 });
 
 router.get("/track", async (req, res) => {

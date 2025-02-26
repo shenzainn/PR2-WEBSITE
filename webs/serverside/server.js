@@ -131,6 +131,8 @@ app.get("/files/:filename", async (req, res) => {
 // Student Model (Ensure you have this defined)
 import Student from "./models/student.js";
 import Request from "./models/request.js";
+import User from "./models/user.js";
+User();
 // Admin Registers a New Student
 app.post("/admin/register-student", async (req, res) => {
     const { studentNumber, password } = req.body;
@@ -154,27 +156,38 @@ app.post("/admin/register-student", async (req, res) => {
 
 // Student Login
 app.post("/login", async (req, res) => {
-    const { studentNumber, password } = req.body;
+  console.log("Received login request:", req.body); // Debugging line
 
-    try {
-        const student = await Student.findOne({ studentNumber });
+  const { studentNumber, password } = req.body;
+  console.log("Type of studentNumber:", typeof studentNumber);
 
-        if (!student) {
-            return res.json({ success: false, message: "Student not found" });
-        }
+  try {
+      // Log the search query
+      console.log("Searching for user with studentNumber:", studentNumber);
 
-        const isMatch = await bcrypt.compare(password, student.password);
-        if (!isMatch) {
-            return res.json({ success: false, message: "Invalid password" });
-        }
+      const user = await User.findOne({ studentNumber });
 
-        req.session.student = student;
-        res.json({ success: true, redirect: "/students" });
-    } catch (error) {
-        console.error(error);
-        res.json({ success: false, message: "Server error" });
-    }
+      if (!user) {
+          console.log("❌ User not found in database");
+          return res.status(401).json({ success: false, message: "Invalid credentials" });
+      }
+
+      console.log("✅ User found:", user);
+
+      if (!password || !(await bcrypt.compare(password, user.password))) {
+          console.log("❌ Incorrect password");
+          return res.status(401).json({ success: false, message: "Invalid credentials" });
+      }
+
+      console.log("✅ Login successful!");
+      res.json({ success: true, role: user.role });
+
+  } catch (error) {
+      console.error("❌ Server error:", error);
+      res.status(500).json({ success: false, message: "Server error" });
+  }
 });
+
 
 // Logout Route
 app.get("/logout", (req, res) => {
