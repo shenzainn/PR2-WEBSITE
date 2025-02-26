@@ -16,29 +16,21 @@ router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });
 });
 
-router.get('/track', async (req, res) => {
-    res.render("StudentTracking.ejs",{portNum, localIP })
-    const { studentNumber } = req.query;
-
-    if (!studentNumber) {
-        return res.status(400).json({ error: "Student number is required." });
+router.get("/track", async (req, res) => {
+    if (!req.session || !req.session.studentNumber) {
+        return res.render("StudentTracking.ejs", { portNum, localIP, studentNumber: null, error: "Not logged in" });
     }
 
     try {
-        const requestData = await Request.findOne({ studentNumber });
-
-        if (!requestData) {
-            return res.status(404).json({ error: "No request found." });
-        }
-
-        res.json({
-            requestStatus: requestData.requestStatus,
-            fileUrl: requestData.fileUrl || null,
-        });
+        const studentNumber = req.session.studentNumber;
+        res.render("StudentTracking.ejs", { portNum, localIP, studentNumber, error: null });
     } catch (error) {
-        res.status(500).json({ error: "Server error." });
+        console.error("Tracking Error:", error);
+        res.render("StudentTracking.ejs", { portNum, localIP, studentNumber: null, error: "Server error" });
     }
 });
+
+
 
 router.get('/submit', (req, res) => {
     res.render("StudentSubmit.ejs",{portNum, localIP })

@@ -6,6 +6,7 @@ import { GridFSBucket } from "mongodb";
 import bcrypt from "bcryptjs";
 import cors from "cors";
 import crypto from "crypto";
+import session from 'express-session';
 import { Readable } from "stream";
 import dotenv from "dotenv";
 dotenv.config();
@@ -16,6 +17,13 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(session({
+  secret: "your_secret_key",  // Change this to a strong secret
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false }  // Set to true if using HTTPS
+}));
 
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
@@ -153,7 +161,7 @@ app.post("/admin/register-student", async (req, res) => {
     }
 });
 
-// Student Login
+// Login
 app.post("/login", async (req, res) => {
   console.log("Received login request:", req.body); // Debugging line
 
@@ -172,6 +180,10 @@ app.post("/login", async (req, res) => {
       }
 
       console.log("User found:", user);
+
+      // Store studentNumber in session
+      req.session.studentNumber = user.studentNumber;
+      req.session.role = user.role;  // Store role if needed
 
       if (!password || !(await bcrypt.compare(password, user.password))) {
           console.log("Incorrect password");
