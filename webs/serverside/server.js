@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import multer from "multer";
 import { GridFSBucket } from "mongodb";
 import bcrypt from "bcryptjs";
-import session from "express-session";
 import cors from "cors";
 import crypto from "crypto";
 import { Readable } from "stream";
@@ -123,7 +122,7 @@ app.get("/files/:filename", async (req, res) => {
     const readStream = bucket.openDownloadStreamByName(file.filename);
     readStream.pipe(res);
   } catch (error) {
-    console.error("❌ Error fetching file:", error);
+    console.error("Error fetching file:", error);
     res.status(500).send("Error fetching file");
   }
 });
@@ -168,22 +167,22 @@ app.post("/login", async (req, res) => {
       const user = await User.findOne({ studentNumber });
 
       if (!user) {
-          console.log("❌ User not found in database");
+          console.log("User not found in database");
           return res.status(401).json({ success: false, message: "Invalid credentials" });
       }
 
-      console.log("✅ User found:", user);
+      console.log("User found:", user);
 
       if (!password || !(await bcrypt.compare(password, user.password))) {
-          console.log("❌ Incorrect password");
+          console.log("Incorrect password");
           return res.status(401).json({ success: false, message: "Invalid credentials" });
       }
 
-      console.log("✅ Login successful!");
+      console.log("Login successful!");
       res.json({ success: true, role: user.role });
 
   } catch (error) {
-      console.error("❌ Server error:", error);
+      console.error("Server error:", error);
       res.status(500).json({ success: false, message: "Server error" });
   }
 });
