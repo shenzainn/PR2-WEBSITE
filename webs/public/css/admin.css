@@ -95,9 +95,14 @@ body {
 }
 
 #main-content {
-    margin-left: 260px;
+    margin-left: 260px; /* Default margin when sidebar is visible */
     padding: 30px;
     transition: margin-left 0.3s ease-in-out;
+}
+
+/* When sidebar is active (hidden), remove the left margin */
+#sidebar.active ~ #main-content {
+    margin-left: 0;
 }
 
 .welcome {
@@ -201,6 +206,11 @@ body {
     }
 }
 
+@media (min-width: 769px) {
+    #menu-toggle {
+        display: none !important;
+    }
+}
 /*help tab - start*/
 .faq {
     background: white;
@@ -527,11 +537,6 @@ input:checked + .slider {
 
 input:checked + .slider::before {
     transform: translateX(26px);
-}
-
-#main-content {
-    margin-left: 270px;
-    padding: 20px;
 }
 
 h2 {
