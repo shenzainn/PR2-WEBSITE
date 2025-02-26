@@ -37,8 +37,8 @@
 </div>
     <script>
         async function loginUser() {
-            const studentNumber = document.getElementById('StudentNumber').value;
-            const password = document.getElementById('password').value;
+            const studentNumber = document.getElementById('StudentNumber').value.trim();
+            const password = document.getElementById('password').value.trim();
             
             try {
                 const response = await fetch('http://localhost:3000/login', {

@@ -1,89 +1,75 @@
 import express from "express";
-import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 import RequestModel from "../models/request.js";
-import Student from "../models/student.js";
 import User from "../models/user.js";
 
 const router = express.Router();
 const portNum = process.env.PORT || 3000;
 const localIP = "192.168.76.73";
 
+router.use(express.json());
+
+//link routes
 router.get("/", (req, res) => {
     res.render("AdminHome.ejs", { portNum, localIP });
 });
 
-router.get("/user", (req, res) => {
-    res.render("AdminUsers.ejs", { portNum, localIP });
-});
-
-router.get("/track", async (req, res) => {
-    if (!req.session?.student || req.session.student.role !== "admin") {
-        return res.redirect("/login");
-    }
+// Route: Render User Management Page
+router.get("/user", async (req, res) => {
     try {
-        const requests = await RequestModel.find();
-        res.render("AdminTracking.ejs", { portNum, localIP, requests });
+        const users = await User.find(); // Fetch users from DB
+        res.render("AdminUsers.ejs", { portNum, localIP, users }); // Pass users
     } catch (error) {
-        console.error("Error fetching requests:", error);
-        res.status(500).send("Server Error");
+        console.error("Error fetching users:", error);
+        res.render("AdminUsers.ejs", { portNum, localIP, users: [] });
     }
 });
 
+// Route: Add a New User
 router.post("/users", async (req, res) => {
-    const { studentNumber, name, email } = req.body;
-
-    if (!studentNumber || !name || !email) {
-        return res.status(400).json({ message: "All fields are required!" });
-    }
-
     try {
-        // Check if student already exists
-        const existingUser = await User.findOne({ studentNumber });
-        if (existingUser) {
-            return res.status(400).json({ message: "Student already exists!" });
+        const { studentNumber, studentName, email, password, role } = req.body;
+
+        if (!studentNumber || !studentName || !email || !password || !role) {
+            return res.status(400).json({ message: "All fields are required." });
         }
 
-        // Hash default password before storing
-        const hashedPassword = await bcrypt.hash("default123", 10);
+        // Check if user already exists
+        const existingUser = await User.findOne({ studentNumber });
+        if (existingUser) {
+            return res.status(400).json({ message: "User already exists!" });
+        }
 
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create user
         const newUser = new User({
             studentNumber,
-            name,
+            studentName,
             email,
             password: hashedPassword,
-            role: "student"
+            role
         });
 
         await newUser.save();
-        res.status(201).json({ message: "Student added successfully!" });
+        res.status(201).json({ message: "User added successfully!" });
 
     } catch (error) {
-        console.error("Error adding student:", error);
-        res.status(500).json({ message: "Server error. Please try again." });
+        console.error("Error adding user:", error);
+        res.status(500).json({ message: "Server Error" });
     }
 });
 
-
-
-// Route to get all students
-router.get("/users", async (req, res) => {
-    try {
-        const students = await User.find({ role: "student" }).select("-password"); // Exclude password field
-        res.json(students);
-    } catch (error) {
-        console.error("Error fetching students:", error);
-        res.status(500).json({ message: "Server error." });
-    }
-});
-
-// Route to delete a student
+// Route: Delete a User
 router.delete("/users/:id", async (req, res) => {
     try {
-        await User.findByIdAndDelete(req.params.id);
-        res.json({ message: "Student removed successfully!" });
+        const { id } = req.params;
+        await User.findByIdAndDelete(id);
+        res.json({ message: "User removed successfully!" });
     } catch (error) {
-        console.error("Error removing student:", error);
-        res.status(500).json({ message: "Server error." });
+        console.error("Error deleting user:", error);
+        res.status(500).json({ message: "Server Error" });
     }
 });
 
