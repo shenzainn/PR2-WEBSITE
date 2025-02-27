@@ -52,7 +52,7 @@
                 console.log("Server Response:", data);
 
                 if (data.success) {
-                    window.location.href = data.role === 'admin' ? '/admin' : '/students';
+                    window.location.href = data.role === 'admin' ? '/admin' : '/student';
                 } else {
                     alert('Login failed. Please check your credentials.');
                 }
