@@ -555,32 +555,37 @@ h2 {
     border-radius: 4px;
 }
 
-#userList {
+#userTable {
     width: 100%;
     border-collapse: collapse;
+    margin-top: 10px;
 }
 
-#userList th, #userList td {
-    padding: 10px;
-    border: 1px solid #ddd;
-}
-
-#userList th {
-    background-color: #f1f1f1;
-}
-
-tr {
-    color: black;
-}
-
-.stat {
-    text-align: center;
+#userTable th, #userTable td {
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+    text-align: left;
+    color: black;
+    font-weight: normal;
 }
 
-.stat h3 {
-    margin: 0;
+#userTable td {
+    background-color: white;
+}
+#userTable th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+#userTable button {
+    padding: 5px 10px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+#userTable button:hover {
+    background-color: darkred;
 }
