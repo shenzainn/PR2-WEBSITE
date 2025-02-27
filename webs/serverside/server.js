@@ -6,7 +6,8 @@ import { GridFSBucket } from "mongodb";
 import bcrypt from "bcryptjs";
 import cors from "cors";
 import crypto from "crypto";
-import session from 'express-session';
+import MongoStore from "connect-mongo";
+import session from "express-session";
 import { Readable } from "stream";
 import dotenv from "dotenv";
 dotenv.config();
@@ -19,10 +20,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: "your_secret_key",  // Change this to a strong secret
+  secret: "your_secret_key",
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: false }  // Set to true if using HTTPS
+  store: MongoStore.create({
+      mongoUrl: "mongodb://localhost:27017/PR2_Website"
+  })
 }));
 
 app.get("/", (req, res) => {

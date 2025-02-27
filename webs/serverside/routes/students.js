@@ -29,9 +29,6 @@ router.get("/track", async (req, res) => {
         res.render("StudentTracking.ejs", { portNum, localIP, studentNumber: null, error: "Server error" });
     }
 });
-
-
-
 router.get('/submit', (req, res) => {
     res.render("StudentSubmit.ejs",{portNum, localIP })
 })
