@@ -589,3 +589,79 @@ h2 {
 #userTable button:hover {
     background-color: darkred;
 }
+
+/*document management*/
+.table-container {
+    background: white;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+h3 {
+    text-align: left;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+table th, table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+table th {
+    background: #2C3E50;
+    color: white;
+}
+
+table tr:hover {
+    background-color: #f1f1f1;
+}
+/* Button Styling */
+button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+/* Approve Button */
+.approve {
+    background-color: #28a745;
+    color: white;
+}
+
+.approve:hover {
+    background-color: #218838;
+}
+
+/* Deny Button */
+.deny {
+    background-color: #dc3545;
+    color: white;
+}
+
+.deny:hover {
+    background-color: #c82333;
+}
+
+/* Move to Pending Button */
+.pending {
+    background-color: #ffc107;
+    color: black;
+}
+
+.pending:hover {
+    background-color: #e0a800;
+}
