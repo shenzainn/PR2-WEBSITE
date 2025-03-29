@@ -30,7 +30,7 @@ app.use(session({
 
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.76.73"; // change to your actual local IP
+  const localIP = "192.168.137.73"; // change to your actual local IP
   res.render("index", { portNum, localIP });
 });
 
