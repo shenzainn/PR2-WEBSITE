@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings</title>
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+
+<body>
+    <button id="menu-toggle">☰</button>
+    
+    <!-- Sidebar -->
+    <section id="sidebar">
+        <div class="logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+        </div>
+        
+        <div class="items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message">Messages</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section id="main-content">
+        <h1>Settings</h1>
+        
+        <div class="settings-container">
+            <!-- Password Change Card -->
+            <div class="settings-card">
+                <h2>Change Password</h2>
+                <input type="password" id="current-password" placeholder="Current Password">
+                <input type="password" id="new-password" placeholder="New Password">
+                <button onclick="changePassword()">Update Password</button>
+            </div>
+
+            <div class="settings-card">
+                <h2>Logout</h2>
+                <button id="logout-button">Logout</button>
+            </div>
+    
+            <!-- Dark Mode Toggle -->
+            <div class="settings-card">
+                <h2>Theme</h2>
+                <label class="toggle-switch">
+                    <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode()">
+                    <span class="slider"></span>
+                </label>
+                <p>Enable Dark Mode</p>
+            </div>
+        </div>
+    </section>
+
+    <script src="/js/script.js"></script>    
+</body>
+</html>

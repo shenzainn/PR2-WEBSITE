@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
+    <title>Tracking</title>
+
+    <link rel="stylesheet" href="../css/admin.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+
+<body>
+    <button id="menu-toggle">☰</button>
+    <section id="sidebar">
+        <div class="logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+        </div>
+        
+        <ul class="items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/docManage">Manage Documents</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track Requests</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/user">User Management</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+        </ul>
+    </section>
+
+    <main id="main-content">
+        <h1>Admin - Manage Requests</h1>
+
+        <% if (typeof requests !== "undefined" && requests.length > 0) { %>
+            <div class="request-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% request.forEach(request => { %>
+                            <tr>
+                                <td><%= request.studentName %></td>
+                                <td>
+                                    <span class="status <%= request.requestStatus.toLowerCase() %>">
+                                        <%= request.requestStatus %>
+                                    </span>
+                                </td>
+                                <td class="action-buttons">
+                                    <form action="/approve-request/<%= request._id %>" method="POST">
+                                        <button class="approve">Approve</button>
+                                    </form>
+                                    <form action="/reject-request/<%= request._id %>" method="POST">
+                                        <button class="reject">Reject</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% } else { %> 
+            <p class="no-requests">No requests found.</p>
+        <% } %>
+    </main>
+
+    <script src="/js/script.js"></script>    
+</body>
+</html>
