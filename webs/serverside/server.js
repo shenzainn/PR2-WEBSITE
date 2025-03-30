@@ -236,7 +236,7 @@ app.get("/logout", (req, res) => {
 console.log("Views directory set to:", path.join(__dirname, "../views"));
 
 // ejs setup
-app.set("views", path.join(__dirname, "../../views"));
+app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "../public")));
 
