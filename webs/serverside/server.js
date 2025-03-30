@@ -16,6 +16,7 @@ const app = express();
 
 const requiredEnvVars = ["MONGO_URI", "PORT","SESSION_SECRET"];
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+const PORT = process.env.PORT || 3000
 
 
 // Middleware
@@ -36,10 +37,9 @@ app.use(session({
 }));
 
 app.get("/", (req, res) => {
-  const portNum = process.env.PORT || 3000;
   const os = require("os");
   const localIP = os.hostname(); // Gets the hostname of the server
-  res.render("index", { portNum, localIP });
+  res.render("index", { PORT, localIP });
 });
 
 // MongoDB Connection
@@ -238,7 +238,7 @@ app.use("/admin", adminRouter);
 // Serve main page
 
 
-app.listen(portNum, () => {
+app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
