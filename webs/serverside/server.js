@@ -37,7 +37,7 @@ app.use(session({
 }));
 
 app.get("/", (req, res) => {
-  const os = require("os");
+  import os from "os";
   const localIP = os.hostname(); // Gets the hostname of the server
   res.render("index", { PORT, localIP });
 });
