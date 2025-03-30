@@ -46,9 +46,12 @@ app.use(session({
   })
 }));
 
-app.get("/", (req, res) => {
-  const localIP = os.hostname();
-  res.render("index", { PORT, localIP });
+app.get("/", async (req, res) => {
+    const os = await import("os");  // Import os dynamically
+    console.log(os.hostname());
+
+    const localIP = os.hostname();
+    res.render("index", { PORT, localIP });
 });
 
 // MongoDB Connection
