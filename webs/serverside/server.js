@@ -14,7 +14,7 @@ dotenv.config({ path: path.resolve("settings/.env") });
 
 const app = express();
 
-const requiredEnvVars = ["MONGO_URI", "PORT"];
+const requiredEnvVars = ["MONGO_URI", "PORT","SESSION_SECRET"];
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 
 
@@ -37,7 +37,8 @@ app.use(session({
 
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.100.73"; // change to your actual local IP
+  const os = require("os");
+  const localIP = os.hostname(); // Gets the hostname of the server
   res.render("index", { portNum, localIP });
 });
 
@@ -237,8 +238,8 @@ app.use("/admin", adminRouter);
 // Serve main page
 
 
-app.listen(3000, () => {
-  console.log("Server running at http://localhost:3000");
+app.listen(PORT, () => {
+  console.log(`Server running at http://localhost:${PORT}`);
 });
 
 // Serve Admin Tracking Page
