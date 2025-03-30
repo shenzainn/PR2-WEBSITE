@@ -226,7 +226,6 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 // Define __dirname in ES module
