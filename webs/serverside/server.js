@@ -6,6 +6,7 @@ import { GridFSBucket } from "mongodb";
 import bcrypt from "bcryptjs";
 import cors from "cors";
 import crypto from "crypto";
+import os from "os"
 import MongoStore from "connect-mongo";
 import session from "express-session";
 import { Readable } from "stream";
@@ -29,6 +30,9 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+import studentRouter from "./routes/students.js";
+import adminRouter from "./routes/admin.js";
+
 app.use(session({
   secret: process.env.SESSION_SECRET,  // ✅ Use secure key from .env
   resave: false,
@@ -42,9 +46,7 @@ app.use(session({
 }));
 
 app.get("/", (req, res) => {
-  import("os").then(os => {
-  console.log(os.hostname());
-  const localIP = os.hostname(); // Gets the hostname of the server
+  const localIP = os.hostname();
   res.render("index", { PORT, localIP });
 });
 
@@ -228,16 +230,13 @@ import { fileURLToPath } from "url";
 import { dirname, join } from "path";
 
 // Define __dirname in ES module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 // ejs setup
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "../public")));
 
-import studentRouter from "./routes/students.js";
-import adminRouter from "./routes/admin.js";
+
 
 app.use("/students", studentRouter);
 app.use("/admin", adminRouter);
