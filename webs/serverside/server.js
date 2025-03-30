@@ -233,6 +233,7 @@ app.get("/logout", (req, res) => {
 
 
 // Define __dirname in ES module
+console.log("Views directory set to:", path.join(__dirname, "../views"));
 
 // ejs setup
 app.set("views", path.join(__dirname, "../../views"));
