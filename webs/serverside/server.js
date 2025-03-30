@@ -238,7 +238,7 @@ app.use("/admin", adminRouter);
 // Serve main page
 
 
-app.listen(PORT, () => {
+app.listen(portNum, () => {
   console.log(`Server running at http://localhost:${PORT}`);
 });
 
