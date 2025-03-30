@@ -1,0 +1,62 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request</title>
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/request-form.css">
+</head>
+
+<body>
+    <button id="menu-toggle">☰</button>
+    <section id="sidebar">
+        <div class="logo">
+            <img src="/images/UE_RED_SEAL.png" alt="University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+        </div>
+        <div class="items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+        </div>
+    </section>
+    
+    <section id="main-content">
+        <h2>Request a Document</h2>
+        <form id="request-form" action="/submit-request" method="POST">
+            <div class="form-group">
+                <label for="student-name">Full Name:</label>
+                <input type="text" id="student-name" name="student-name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="student-id">Student ID:</label>
+                <input type="text" id="student-id" name="student-id" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="document-type">Document Type:</label>
+                <select id="document-type" name="document-type" required>
+                    <option value="Transcript">Transcript of Records</option>
+                    <option value="Certificate">Certificate of Enrollment</option>
+                    <option value="GoodMoral">Certificate of Good Moral</option>
+                    <option value="Others">Others</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="reason">Reason for Request:</label>
+                <textarea id="reason" name="reason" rows="4" required></textarea>
+            </div>
+            
+            <button type="submit">Submit Request</button>
+        </form>
+    </section>
+    
+    <script src="/js/script.js"></script>    
+</body>
+</html>

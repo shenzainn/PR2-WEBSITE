@@ -10,7 +10,7 @@ import express from "express";
 import Request from "../models/request.js";
 
 const portNum = process.env.port || 3000;
-const localIP = '192.168.137.73'; 
+const localIP = '192.168.100.76'; 
 
 router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });
@@ -31,6 +31,10 @@ router.get("/track", async (req, res) => {
 });
 router.get('/submit', (req, res) => {
     res.render("StudentSubmit.ejs",{portNum, localIP })
+})
+
+router.get('/request', (req, res) => {
+    res.render("StudentRequest.ejs",{portNum, localIP })
 })
 
 router.get('/settings', (req, res) => {

@@ -10,9 +10,13 @@ import MongoStore from "connect-mongo";
 import session from "express-session";
 import { Readable } from "stream";
 import dotenv from "dotenv";
-dotenv.config();
+dotenv.config({ path: path.resolve("settings/.env") });
 
 const app = express();
+
+const requiredEnvVars = ["MONGO_URI", "PORT"];
+const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
+
 
 // Middleware
 app.use(cors());
@@ -20,28 +24,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
-  secret: "your_secret_key",
+  secret: process.env.SESSION_SECRET,  // ✅ Use secure key from .env
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-      mongoUrl: "mongodb://localhost:27017/PR2_Website"
+      mongoUrl: process.env.MONGO_URI,  // ✅ Ensure you're using the correct Atlas URI
+      dbName: "PR2_Website",
+      collectionName: "sessions",  // Optional: Store session data in a separate collection
+      ttl: 14 * 24 * 60 * 60 // Expiry time (14 days)
   })
 }));
 
 app.get("/", (req, res) => {
   const portNum = process.env.PORT || 3000;
-  const localIP = "192.168.137.73"; // change to your actual local IP
+  const localIP = "192.168.100.73"; // change to your actual local IP
   res.render("index", { portNum, localIP });
 });
 
 // MongoDB Connection
 const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/PR2_Website";
 
-mongoose.connect(mongoURI,{
-  serverSelectionTimeoutMS: 10000, // 10 seconds
-  socketTimeoutMS: 120000 // 120 seconds
+mongoose.connect(process.env.MONGO_URI, {
+  serverSelectionTimeoutMS: 10000, 
+  socketTimeoutMS: 120000,
+  dbName: "WEBSITE"
 })
-  .then(() => console.log("MongoDB Connected"))
+  .then(() => console.log("MongoDB Connected to Atlas"))
   .catch(err => console.error("MongoDB Connection Error:", err));
 
 const conn = mongoose.connection;
