@@ -13,6 +13,7 @@ import { Readable } from "stream";
 import dotenv from "dotenv";
 dotenv.config({ path: path.resolve("settings/.env") });
 import { fileURLToPath } from 'url';
+import { dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -226,7 +227,7 @@ app.get("/logout", (req, res) => {
     res.redirect("/");
 });
 
-import { dirname, join } from "path";
+
 
 // Define __dirname in ES module
 
