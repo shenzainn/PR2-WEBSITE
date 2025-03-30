@@ -1,16 +1,10 @@
-const router = express.Router();
-import express from "express";
-// how to route files 
+import express from "express";  // ✅ Import express first
+import Request from "../models/request.js";  
 
-/*
-1. ../ reroutes to serverside folder immediately
-2. select folder name first before file name
-*/
+const router = express.Router();  // ✅ Now it's safe to use express.Router()
 
-import Request from "../models/request.js";
-
-const portNum = process.env.port || 3000;
-const localIP = '192.168.100.76'; 
+const portNum = process.env.PORT || 3000;
+const localIP = "192.168.100.76";
 
 router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });
