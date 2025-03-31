@@ -25,6 +25,9 @@ const requiredEnvVars = ["MONGO_URI", "PORT","SESSION_SECRET"];
 const missingEnvVars = requiredEnvVars.filter((envVar) => !process.env[envVar]);
 const PORT = process.env.PORT || 3000
 
+console.log(__dirname); // Should show the correct directory
+console.log(path.join(__dirname, 'views')); // Should show where Express is trying to find views
+
 
 // Middleware
 app.use(cors());
