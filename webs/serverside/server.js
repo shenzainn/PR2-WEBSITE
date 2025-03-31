@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 3000
 
 console.log(__dirname); // Should show the correct directory
 console.log(path.join(__dirname, 'views')); // Should show where Express is trying to find views
+console.log("Views directory set to:", path.join(__dirname, '../../views'));
 
 
 // Middleware
