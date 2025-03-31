@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+    <div class="container" id="signIn">
+        <h1 class="form-title">EduVault</h1>
+        <p class="login-box-msg">Sign in to start your session</p>
+       <div class="input-group">
+        <i class="fa-regular fa-id-card"></i>
+        <input type="text" name="StudentNumber" id="StudentNumber" placeholder="Student Number" required maxlength="11" pattern="\d{11}"> 
+        <label for="StudentNumber">Student Number</label>
+       </div>
+       <div class="input-group">
+           <i class="fas fa-lock"></i>
+           <input type="password" id="password" name="password" placeholder="Password" required>
+           <label for="password">Password</label>
+       </div>
+       <p class="recover">
+        <a href="#">Forgot Password?</a>
+       </p>
+       <input type="submit" class="btn" value="Sign In" name="signIn" onclick="loginUser()">
+    </form>
+    <div>
+       <p class="or">
+        ━━━ or ━━━
+       </p>
+       <div class="icons">
+        <i class="fa-brands fa-google"></i>
+       </div>
+    </div>
+</div>
+    <script>
+        async function loginUser() {
+            const studentNumber = document.getElementById('StudentNumber').value.trim();
+            const password = document.getElementById('password').value.trim();
+            
+            try {
+                const response = await fetch('http://localhost:3000/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ studentNumber, password })
+                });
+
+                const data = await response.json();
+                console.log("Server Response:", data);
+
+                if (data.success) {
+                    window.location.href = data.role === 'admin' ? '/admin' : '/students';
+                } else {
+                    alert('Login failed. Please check your credentials.');
+                }
+            } catch (error) {
+                console.error("Error logging in:", error);
+                alert("Failed to connect to the server.");
+            }
+        }
+    </script>
+    <script src="/js/script.js"></script>
+</body>
+</html>
