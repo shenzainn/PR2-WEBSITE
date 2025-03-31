@@ -49,8 +49,7 @@ app.use(session({
   })
 }));
 
-app.get("/", async (req, res) => {
-    const os = await import("os");  // Import os dynamically
+app.get("/", (req, res) => {
     console.log(os.hostname());
 
     const localIP = os.hostname();
