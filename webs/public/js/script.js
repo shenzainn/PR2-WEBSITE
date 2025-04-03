@@ -94,3 +94,37 @@ function changePassword() {
         alert("Please fill in both password fields.");
     }
 }
+// notif function 
+function removeNotification(el) {
+    el.parentElement.style.opacity = "0";
+    setTimeout(() => el.parentElement.remove(), 500);
+}
+
+// Fetch notifications dynamically
+function fetchNotifications() {
+    fetch('/api/notifications')
+        .then(response => response.json())
+        .then(data => {
+            const box = document.getElementById('notificationBox');
+            box.innerHTML = ''; // Clear existing notifications
+            
+            if (data.length === 0) {
+                box.innerHTML = '<p class="no-notif">No notifications available.</p>';
+                return;
+            }
+
+            data.forEach(notification => {
+                const div = document.createElement('div');
+                div.classList.add('notification', notification.type);
+                div.innerHTML = `
+                    <p><strong>${notification.type.toUpperCase()}:</strong> ${notification.message}</p>
+                    <span class="close-btn" onclick="removeNotification(this)">×</span>
+                `;
+                box.appendChild(div);
+            });
+        })
+        .catch(error => console.error('Error fetching notifications:', error));
+}
+
+// Refresh notifications every 5 seconds
+setInterval(fetchNotifications, 5000);

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Messages</title>
+    <title>Notifications</title>
     <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
@@ -21,11 +21,26 @@
         <div class = "items">
             <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/message>Messages</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/stUdents/notif">Notifications</a></li>
             <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
         </div>
     </section>
+
+    <section id ="main-content">
+        <h2>Notifications</h2>
+            <% if (typeof notifications !== 'undefined' && notifications.length > 0) { %>
+                <ul>
+                    <% notifications.forEach(notification => { %>
+                        <li><strong><%= notification.type %>:</strong> <%= notification.message %></li>
+                    <% }) %>
+                </ul>
+            <% } else { %>
+                <p>No notifications available.</p>
+            <% } %>
+            
+        </ul>
+        </section>
     <script src="/js/script.js"></script>    
 </body>
 </html>

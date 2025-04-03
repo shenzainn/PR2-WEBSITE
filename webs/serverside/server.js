@@ -303,3 +303,13 @@ app.post("/reject-request/:id", async (req, res) => {
     await Request.findByIdAndUpdate(req.params.id, { requestStatus: "Rejected" });
     res.redirect("/admin/track");
 });
+
+// Notification
+app.get('/api/notifications', (req, res) => {
+    const notifications = [
+        { type: 'approved', message: 'Your request has been approved!' },
+        { type: 'denied', message: 'Your request was denied.' },
+        { type: 'pending', message: 'Your request is still pending.' }
+    ];
+    res.json(notifications);
+});
