@@ -35,9 +35,15 @@ router.get('/settings', (req, res) => {
     res.render("StudentSettings.ejs",{portNum, localIP })
 })
 
-router.get('/message', (req, res) => {
-    res.render("StudentMessages.ejs",{portNum, localIP })
-})
+router.get('/student/messages', (req, res) => {
+    const notifications = [
+        { type: 'approved', message: 'Your request has been approved!' },
+        { type: 'denied', message: 'Your request was denied.' },
+        { type: 'pending', message: 'Your request is still pending.' }
+    ];
+
+    res.render('StudentMessages', { notifications }); // ✅ Pass notifications to EJS
+});
 
 router.get('/help', (req, res) => {
     res.render("StudentHelp.ejs",{portNum, localIP })
@@ -63,7 +69,6 @@ const { formType } = req.body;
     await newRequest.save();
     res.redirect("/students/tracking");
 });
-
 
 
 export default router;

@@ -27,6 +27,7 @@ const PORT = process.env.PORT || 3000
 
 console.log(__dirname); // Should show the correct directory
 console.log(path.join(__dirname, 'views')); // Should show where Express is trying to find views
+console.log("Views directory set to:", path.join(__dirname, '../../views'));
 
 
 // Middleware
@@ -58,17 +59,41 @@ app.get("/", (req, res) => {
 
 // MongoDB Connection
 const mongoURI = process.env.MONGO_URI || "mongodb://localhost:27017/PR2_Website";
+const localURI = "mongodb://localhost:27017/PR2_Website"; // Local MongoDB
 
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 10000, 
-  socketTimeoutMS: 120000,
-  dbName: "WEBSITE"
-})
-  .then(() => console.log("MongoDB Connected to Atlas"))
-  .catch(err => console.error("MongoDB Connection Error:", err));
+async function connectDB() {
+  try {
+    console.log("Attempting to connect to MongoDB Atlas...");
+    await mongoose.connect(mongoURI, {
+      serverSelectionTimeoutMS: 10000, 
+      socketTimeoutMS: 120000,
+      dbName: "WEBSITE"
+    });
+    console.log("✅ Connected to MongoDB Atlas");
+  } catch (atlasError) {
+    console.error("❌ Failed to connect to MongoDB Atlas:", atlasError.message);
+    
+    console.log("⚠️ Retrying with local MongoDB instance...");
+    try {
+      await mongoose.connect(localURI, {
+        serverSelectionTimeoutMS: 10000, 
+        socketTimeoutMS: 120000,
+        dbName: "WEBSITE"
+      });
+      console.log("✅ Connected to Local MongoDB (Compass)");
+    } catch (localError) {
+      console.error("❌ Failed to connect to Local MongoDB:", localError.message);
+      process.exit(1);  // Exit if both connections fail
+    }
+  }
+}
+
+// Call the function to connect
+connectDB();
 
 const conn = mongoose.connection;
 let bucket;
+
 
 conn.once("open", () => {
   console.log("GridFS initialized");
@@ -277,4 +302,14 @@ app.post("/approve-request/:id", upload.single("file"), async (req, res) => {
 app.post("/reject-request/:id", async (req, res) => {
     await Request.findByIdAndUpdate(req.params.id, { requestStatus: "Rejected" });
     res.redirect("/admin/track");
+});
+
+// Notification
+app.get('/api/notifications', (req, res) => {
+    const notifications = [
+        { type: 'approved', message: 'Your request has been approved!' },
+        { type: 'denied', message: 'Your request was denied.' },
+        { type: 'pending', message: 'Your request is still pending.' }
+    ];
+    res.json(notifications);
 });
