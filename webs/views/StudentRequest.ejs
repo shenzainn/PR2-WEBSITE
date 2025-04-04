@@ -28,30 +28,30 @@
     
     <section id="main-content">
         <h2>Request a Document</h2>
-        <form id="request-form" action="/submit-request" method="POST">
+        <form id="request-form" action="/students/request" method="POST">
             <div class="form-group">
-                <label for="student-name">Full Name:</label>
-                <input type="text" id="student-name" name="student-name" required>
+                <label for="studentName">Full Name:</label>
+                <input type="text" id="studentName" name="studentName" required>
             </div>
-            
+        
             <div class="form-group">
-                <label for="student-iD">Student No.:</label>
-                <input type="text" id="student-id" name="student-id" required>
+                <label for="studentNumber">Student No.:</label>
+                <input type="text" id="studentNumber" name="studentNumber" required>
             </div>
-
+        
             <div class="form-group">
-                <label for="student-id">Grade Level & Section</label>
-                <input type="text" id="student-id" name="student-id" required>
+                <label for="gradeSection">Grade Level & Section:</label>
+                <input type="text" id="gradeSection" name="gradeSection" required>
             </div>
-
+        
             <div class="form-group">
-                <label for="document-type">School Year:</label>
-                <input type="text" id="student-id" name="student-id" required>
+                <label for="schoolYear">School Year:</label>
+                <input type="text" id="schoolYear" name="schoolYear" required>
             </div>
-            
+        
             <div class="form-group">
-                <label for="document-type">Document Type:</label>
-                <select id="document-type" name="document-type" required>
+                <label for="documentType">Document Type:</label>
+                <select id="documentType" name="documentType" required>
                     <option value="Transcript">Transcript of Records (F137-SF10) - K10 ONLY </option>
                     <option value="Certificate">Certificate of Enrollment - K10 ONLY</option>
                     <option value="GoodMoral">Certificate of Good Moral</option>
@@ -62,12 +62,12 @@
                     <option value="Others">Others</option>
                 </select>
             </div>
-            
+        
             <div class="form-group">
                 <label for="reason">Reason for Request:</label>
-                <textarea id="reason" name="reason" rows="4" required></textarea>
+                <textarea id="Reqreason" name="Reqreason" rows="4" required></textarea>
             </div>
-            
+        
             <button type="submit">Submit Request</button>
         </form>
     </section>

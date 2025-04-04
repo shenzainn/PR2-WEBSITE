@@ -20,43 +20,47 @@
         </div>
         
         <ul class="items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/docManage">Manage Documents</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track Requests</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/user">User Management</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/">Home</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/docManage">Manage Documents</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/track">Track Requests</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/user">User Management</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/settings">Settings</a></li>
+            <li><a href="http://<%= localIP %>:<%= portNum %>/admin/help">Help</a></li>
         </ul>
     </section>
 
     <main id="main-content">
         <h1>Admin - Manage Requests</h1>
 
-        <% if (typeof requests !== "undefined" && requests.length > 0) { %>
+        <% if (typeof newRequests !== "undefined" && newRequests.length > 0) { %>
             <div class="request-table">
                 <table>
                     <thead>
                         <tr>
                             <th>Student Name</th>
                             <th>Status</th>
+                            <th>Submitted At</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <% request.forEach(request => { %>
+                        <% newRequests.forEach(request => { %>
                             <tr>
                                 <td><%= request.studentName %></td>
                                 <td>
-                                    <span class="status <%= request.requestStatus.toLowerCase() %>">
-                                        <%= request.requestStatus %>
+                                    <span class="status <%= request.status.toLowerCase() %>">
+                                        <%= request.status.charAt(0).toUpperCase() + request.status.slice(1) %>
                                     </span>
                                 </td>
+                                <td><%= request.submittedAt.toLocaleString() %></td>
                                 <td class="action-buttons">
-                                    <form action="/approve-request/<%= request._id %>" method="POST">
-                                        <button class="approve">Approve</button>
+                                    <form action="/admin/request/<%= request._id %>/status" method="POST" style="display:inline;">
+                                        <input type="hidden" name="status" value="approved">
+                                        <button class="approve" type="submit">Approve</button>
                                     </form>
-                                    <form action="/reject-request/<%= request._id %>" method="POST">
-                                        <button class="reject">Reject</button>
+                                    <form action="/admin/request/<%= request._id %>/reject" method="POST" onsubmit="return confirmReject(this)" style="display:inline;">
+                                        <input type="hidden" name="reason" value="">
+                                        <button class="reject" type="submit">Reject</button>
                                     </form>
                                 </td>
                             </tr>
@@ -69,6 +73,14 @@
         <% } %>
     </main>
 
-    <script src="/js/script.js"></script>    
+    <script src="/js/script.js"></script>
+    <script>
+        function confirmReject(form) {
+            const reason = prompt("Reason for rejection:");
+            if (!reason) return false;
+            form.reason.value = reason;
+            return true;
+        }
+    </script>
 </body>
 </html>

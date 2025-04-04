@@ -25,16 +25,60 @@ router.get("/user", async (req, res) => {
     }
 });
 router.get("/track", async (req, res) => {
-    res.render("AdminTracking.ejs", { portNum, localIP });
-
     try {
-        const requests = await RequestModel.find(); // Fetch all requests from DB
-        res.render("AdminTracking.ejs", { portNum, localIP, requests }); // Pass requests to EJS
-    } catch (error) {
-        console.error("Error fetching requests:", error);
-        res.status(500).send("Server Error");
+        const newRequests = await RequestModel.find({ status: 'new' });
+        const pendingRequests = await RequestModel.find({ status: 'pending' });
+        const approvedRequests = await RequestModel.find({ status: 'approved' });
+        const rejectedRequests = await RequestModel.find({ status: 'rejected' });
+
+        res.render("AdminTracking.ejs", {
+            portNum,
+            localIP,
+            newRequests,
+            pendingRequests,
+            approvedRequests,
+            rejectedRequests
+        });
+    } catch (err) {
+        console.error("Admin Tracking Error:", err);
+        res.status(500).send("Server error");
     }
 });
+
+router.post("/request/:id/status", async (req, res) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    try {
+        await RequestModel.findByIdAndUpdate(id, {
+            status,
+            decisionDate: new Date()
+        });
+        res.redirect("/admin/track");
+    } catch (err) {
+        console.error("Error updating request:", err);
+        res.status(500).send("Failed to update request");
+    }
+});
+
+router.post("/request/:id/reject", async (req, res) => {
+    const { id } = req.params;
+    const { reason } = req.body;
+
+    try {
+        await RequestModel.findByIdAndUpdate(id, {
+            status: "rejected",
+            rejectionReason: reason,  // Save the rejection reason
+            decisionDate: new Date()
+        });
+        res.redirect("/admin/track");
+    } catch (err) {
+        console.error("Error rejecting request:", err);
+        res.status(500).send("Failed to reject request");
+    }
+});
+
+
 router.get("/message", (req, res) => {
     res.render("AdminMessages.ejs", { portNum, localIP });
 });

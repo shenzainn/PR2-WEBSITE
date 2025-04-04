@@ -29,9 +29,26 @@
     <section id="main-content">
         <h2>Track Your Request</h2>
 
-        <div id="tracking-status">
-            <p>Loading tracking information...</p>
-        </div>
+        <table id="pending-requests">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Document Type</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% requests.filter(r => r.status === "new" || r.status === "pending").forEach(req => { %>
+                    <tr>
+                        <td><%= req._id %></td>
+                        <td><%= req.documentType %></td>
+                        <td><%= new Date(req.createdAt).toLocaleDateString() %></td>
+                        <td><%= req.status.charAt(0).toUpperCase() + req.status.slice(1) %></td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
 
         <table id="approved-requests">
             <thead>
@@ -42,58 +59,39 @@
                     <th>Download</th>
                 </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+                <% requests.filter(r => r.status === "approved").forEach(req => { %>
+                    <tr>
+                        <td><%= req._id %></td>
+                        <td><%= req.documentType %></td>
+                        <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
+                        <td><a href="<%= req.fileUrl || '#' %>" target="_blank">Download</a></td>
+                    </tr>
+                <% }) %>
+            </tbody>
         </table>
-
+        
         <table id="rejected-requests">
             <thead>
                 <tr>
                     <th>Request ID</th>
                     <th>Document Type</th>
                     <th>Date Rejected</th>
-                    <th>Reason</th>
+                    <th>Reason</th>  <!-- Add header for Reason -->
                 </tr>
             </thead>
-            <tbody></tbody>
-        </table>
-
-        <script>
-            function loadDemoData() {
-                const approvedRequests = [
-                    { requestID: "REQ001", documentType: "Transcript", dateApproved: "2025-04-01", fileUrl: "#" },
-                    { requestID: "REQ002", documentType: "Diploma", dateApproved: "2025-04-02", fileUrl: "#" }
-                ];
-
-                const rejectedRequests = [
-                    { requestID: "REQ003", documentType: "Certificate of Ranking Per Strand", dateRejected: "2025-04-03", reason: "Not an Honors Student." },
-                    { requestID: "REQ004", documentType: "ID Replacement", dateRejected: "2025-04-04", reason: "Invalid application" }
-                ];
-
-                let approvedHTML = approvedRequests.map(req => `
+            <tbody>
+                <% requests.filter(r => r.status === "rejected").forEach(req => { %>
                     <tr>
-                        <td>${req.requestID}</td>
-                        <td>${req.documentType}</td>
-                        <td>${req.dateApproved}</td>
-                        <td><a href="${req.fileUrl}" target="_blank">Download</a></td>
+                        <td><%= req._id %></td>
+                        <td><%= req.documentType %></td>
+                        <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
+                        <!-- Display rejection reason -->
+                        <td><%= req.rejectionReason || 'No reason provided' %></td>
                     </tr>
-                `).join("");
-                document.querySelector("#approved-requests tbody").innerHTML = approvedHTML;
-
-                let rejectedHTML = rejectedRequests.map(req => `
-                    <tr>
-                        <td>${req.requestID}</td>
-                        <td>${req.documentType}</td>
-                        <td>${req.dateRejected}</td>
-                        <td>${req.reason}</td>
-                    </tr>
-                `).join("");
-                document.querySelector("#rejected-requests tbody").innerHTML = rejectedHTML;
-
-                document.getElementById("tracking-status").innerHTML = "<p>Tracking data loaded.</p>";
-            }
-
-            document.addEventListener("DOMContentLoaded", loadDemoData);
-        </script>
+                <% }) %>
+            </tbody>
+        </table>        
     </section>
     <script src="/js/script.js"></script>
 </body>
