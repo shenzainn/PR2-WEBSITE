@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
+    <link rel="stylesheet" href="/css/styles.css">
+    
+</head>
+
+<body>
+    <button id="menu-toggle">☰</button>
+    <section id = "sidebar">
+        <div class="logo">
+            <img src = "/images/UE_RED_SEAL.png" alt = "University of the East Logo">
+            <h1>EduVault</h1>
+            <h2>Structured Document Management System</h2>
+            
+        </div>
+        
+        <div class = "items">
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/notif">Notifications</a></li>
+            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+        </div>
+    </section>
+    <section id="main-content">
+        <div class="welcome">
+            <h1>Welcome, [Student]</h1>
+            <p>Here's a quick overview of what you can do</p>
+        </div>
+
+    <script src="/js/script.js"></script>    
+</body>
+</html>
