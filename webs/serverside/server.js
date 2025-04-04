@@ -39,11 +39,11 @@ import studentRouter from "./routes/students.js";
 import adminRouter from "./routes/admin.js";
 
 app.use(session({
-  secret: process.env.SESSION_SECRET,  // ✅ Use secure key from .env
+  secret: process.env.SESSION_SECRET,  // Use secure key from .env
   resave: false,
   saveUninitialized: true,
   store: MongoStore.create({
-      mongoUrl: process.env.MONGO_URI,  // ✅ Ensure you're using the correct Atlas URI
+      mongoUrl: process.env.MONGO_URI,  // Ensure you're using the correct Atlas URI
       dbName: "PR2_Website",
       collectionName: "sessions",  // Optional: Store session data in a separate collection
       ttl: 14 * 24 * 60 * 60 // Expiry time (14 days)
@@ -69,20 +69,20 @@ async function connectDB() {
       socketTimeoutMS: 120000,
       dbName: "WEBSITE"
     });
-    console.log("✅ Connected to MongoDB Atlas");
+    console.log("Connected to MongoDB Atlas");
   } catch (atlasError) {
-    console.error("❌ Failed to connect to MongoDB Atlas:", atlasError.message);
+    console.error("Failed to connect to MongoDB Atlas:", atlasError.message);
     
-    console.log("⚠️ Retrying with local MongoDB instance...");
+    console.log("Retrying with local MongoDB instance...");
     try {
       await mongoose.connect(localURI, {
         serverSelectionTimeoutMS: 10000, 
         socketTimeoutMS: 120000,
         dbName: "WEBSITE"
       });
-      console.log("✅ Connected to Local MongoDB (Compass)");
+      console.log("Connected to Local MongoDB (Compass)");
     } catch (localError) {
-      console.error("❌ Failed to connect to Local MongoDB:", localError.message);
+      console.error("Failed to connect to Local MongoDB:", localError.message);
       process.exit(1);  // Exit if both connections fail
     }
   }
