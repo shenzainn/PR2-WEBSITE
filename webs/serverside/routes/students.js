@@ -27,6 +27,10 @@ router.get('/submit', (req, res) => {
     res.render("StudentSubmit.ejs",{portNum, localIP })
 })
 
+router.get('/notif', (req, res) => {
+    res.render("StudentNotif.ejs",{portNum, localIP })
+})
+
 router.get('/request', (req, res) => {
     res.render("StudentRequest.ejs",{portNum, localIP })
 })
