@@ -610,12 +610,14 @@ table {
     width: 100%;
     border-collapse: collapse;
     background: white;
+    table-layout: fixed;  /* ✅ Prevents column shifting when moving rows */
 }
 
 table th, table td {
     padding: 12px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    word-wrap: break-word;  /* ✅ Ensures long text wraps inside the table */
 }
 
 table th {
@@ -626,6 +628,17 @@ table th {
 table tr:hover {
     background-color: #f1f1f1;
 }
+
+/* ✅ Ensure consistent column widths across tables */
+th:last-child, td:last-child {
+    width: 200px;
+}
+
+/* ✅ Preserve structure for canceled requests */
+#canceled-requests td:last-child {
+    width: 200px;
+}
+
 /* Button Styling */
 button {
     padding: 8px 12px;
@@ -634,6 +647,7 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin: 2px;
+    transition: all 0.2s ease-in-out;  /* ✅ Added smooth hover effect */
 }
 
 /* Approve Button */
@@ -644,6 +658,7 @@ button {
 
 .approve:hover {
     background-color: #218838;
+    transform: scale(1.05);  /* ✅ Slight enlarge effect on hover */
 }
 
 /* Deny Button */
@@ -654,6 +669,7 @@ button {
 
 .deny:hover {
     background-color: #c82333;
+    transform: scale(1.05);  /* ✅ Slight enlarge effect on hover */
 }
 
 /* Move to Pending Button */
@@ -664,4 +680,5 @@ button {
 
 .pending:hover {
     background-color: #e0a800;
+    transform: scale(1.05);  /* ✅ Slight enlarge effect on hover */
 }

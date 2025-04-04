@@ -34,16 +34,30 @@
             </div>
             
             <div class="form-group">
-                <label for="student-id">Student ID:</label>
+                <label for="student-iD">Student No.:</label>
+                <input type="text" id="student-id" name="student-id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="student-id">Grade Level & Section</label>
+                <input type="text" id="student-id" name="student-id" required>
+            </div>
+
+            <div class="form-group">
+                <label for="document-type">School Year:</label>
                 <input type="text" id="student-id" name="student-id" required>
             </div>
             
             <div class="form-group">
                 <label for="document-type">Document Type:</label>
                 <select id="document-type" name="document-type" required>
-                    <option value="Transcript">Transcript of Records</option>
-                    <option value="Certificate">Certificate of Enrollment</option>
+                    <option value="Transcript">Transcript of Records (F137-SF10) - K10 ONLY </option>
+                    <option value="Certificate">Certificate of Enrollment - K10 ONLY</option>
                     <option value="GoodMoral">Certificate of Good Moral</option>
+                    <option value="TrueCopy">Certified True Copy of F138 (Gr. 11 F138 of students of NOT CURRENTLY ENROLLED)</option>
+                    <option value="Ranking">Certificate of Ranking Per Strand(Only for Honor Students/Teachers)</option>
+                    <option value="Overall">Certificate of Overall Ranking</option>
+                    <option value="Candidacy">Certificate of Candidacy for Graduation</option>
                     <option value="Others">Others</option>
                 </select>
             </div>

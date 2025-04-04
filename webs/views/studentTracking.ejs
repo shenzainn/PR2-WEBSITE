@@ -18,54 +18,82 @@
         </div>
 
         <div class="items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Track</a></li>
+            <li><a href="#">Settings</a></li>
+            <li><a href="#">Help</a></li>
         </div>
     </section>
 
-    <section id ="main-content">
-    <h2>Track Your Request</h2>
-    
-    <div id="tracking-status">
-        <p>Fetching tracking information...</p>
-    </div>
+    <section id="main-content">
+        <h2>Track Your Request</h2>
 
-    <script>
-        async function fetchTrackingInfo() {
-            try {
-                // Assume studentNumber is stored in a session or received from backend
-                const studentNumber = "<%= studentNumber %>"; // Injected from backend
+        <div id="tracking-status">
+            <p>Loading tracking information...</p>
+        </div>
 
-                if (!studentNumber) {
-                    document.getElementById("tracking-status").innerHTML = "<p>Error: Student number not found.</p>";
-                    return;
-                }
+        <table id="approved-requests">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Document Type</th>
+                    <th>Date Approved</th>
+                    <th>Download</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-                const response = await fetch(`/student-tracking?studentNumber=${studentNumber}`);
-                const data = await response.json();
+        <table id="rejected-requests">
+            <thead>
+                <tr>
+                    <th>Request ID</th>
+                    <th>Document Type</th>
+                    <th>Date Rejected</th>
+                    <th>Reason</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
 
-                if (!data || data.error) {
-                    document.getElementById("tracking-status").innerHTML = "<p>No request found.</p>";
-                    return;
-                }
+        <script>
+            function loadDemoData() {
+                const approvedRequests = [
+                    { requestID: "REQ001", documentType: "Transcript", dateApproved: "2025-04-01", fileUrl: "#" },
+                    { requestID: "REQ002", documentType: "Diploma", dateApproved: "2025-04-02", fileUrl: "#" }
+                ];
 
-                let statusHTML = `<h3>Request Status: ${data.requestStatus}</h3>`;
+                const rejectedRequests = [
+                    { requestID: "REQ003", documentType: "Certificate of Ranking Per Strand", dateRejected: "2025-04-03", reason: "Not an Honors Student." },
+                    { requestID: "REQ004", documentType: "ID Replacement", dateRejected: "2025-04-04", reason: "Invalid application" }
+                ];
 
-                if (data.requestStatus === "Approved") {
-                    statusHTML += `<p>Download your file: <a href="${data.fileUrl}" target="_blank">Download</a></p>`;
-                }
+                let approvedHTML = approvedRequests.map(req => `
+                    <tr>
+                        <td>${req.requestID}</td>
+                        <td>${req.documentType}</td>
+                        <td>${req.dateApproved}</td>
+                        <td><a href="${req.fileUrl}" target="_blank">Download</a></td>
+                    </tr>
+                `).join("");
+                document.querySelector("#approved-requests tbody").innerHTML = approvedHTML;
 
-                document.getElementById("tracking-status").innerHTML = statusHTML;
-            } catch (error) {
-                document.getElementById("tracking-status").innerHTML = "<p>Error fetching tracking information.</p>";
+                let rejectedHTML = rejectedRequests.map(req => `
+                    <tr>
+                        <td>${req.requestID}</td>
+                        <td>${req.documentType}</td>
+                        <td>${req.dateRejected}</td>
+                        <td>${req.reason}</td>
+                    </tr>
+                `).join("");
+                document.querySelector("#rejected-requests tbody").innerHTML = rejectedHTML;
+
+                document.getElementById("tracking-status").innerHTML = "<p>Tracking data loaded.</p>";
             }
-        }
 
-        fetchTrackingInfo();
-    </script>
+            document.addEventListener("DOMContentLoaded", loadDemoData);
+        </script>
     </section>
-    <script src="/js/script.js"></script>    
+    <script src="/js/script.js"></script>
 </body>
 </html>

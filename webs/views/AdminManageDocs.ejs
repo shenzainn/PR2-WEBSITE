@@ -57,7 +57,7 @@
                             "Hannah Rogers", "Luke Peterson", "Elizabeth Reed", "Caleb Bailey", "Zoe Bell"
                         ];
     
-                        const documentTypes = ["Transcript", "Diploma", "Good Moral", "Certificate of Enrollment"];
+                        const documentTypes = ["Certificate of Candidacy for Graduation", "Certificate of Overall Ranking", "Good Moral", "Certificate of Enrollment", "ID Replacement",];
                         
                         let requestHTML = "";
                         for (let i = 1; i <= 50; i++) {
@@ -127,6 +127,7 @@
                         <th>Request ID</th>
                         <th>Student Name</th>
                         <th>Document Type</th>
+                        <th>Reason for Cancellation</th>
                         <th>Date Canceled</th>
                     </tr>
                 </thead>
@@ -137,24 +138,42 @@
     
     
     <script>
-        function moveRequest(button, targetTableId) {
-    let row = button.parentElement.parentElement; // Get the row
-    let targetTable = document.getElementById(targetTableId); // Get target table body
-    
-    // Remove action buttons for approved/canceled requests
-    if (targetTableId === 'approved-requests' || targetTableId === 'canceled-requests') {
-        row.deleteCell(4); 
-    } else if (targetTableId === 'pending-requests') {
-        // Replace "Move to Pending" with "Approve" and "Deny" for Pending Requests
-        row.cells[4].innerHTML = `
-            <button class="approve" onclick="moveRequest(this, 'approved-requests')">Approve</button>
-            <button class="deny" onclick="moveRequest(this, 'canceled-requests')">Deny</button>
-        `;
+            function moveRequest(button, targetTableId) {
+        let row = button.parentElement.parentElement; // Get the row
+        let targetTable = document.getElementById(targetTableId); // Get target table body
+
+        // If rejecting, ask for a reason
+        if (targetTableId === 'canceled-requests') {
+            let reason = prompt("Please provide a reason for rejection:");
+            if (!reason) {
+                alert("Rejection reason is required.");
+                return; // Stop if no reason is provided
+            }
+
+            // Remove action buttons BEFORE inserting reason
+            row.deleteCell(4);
+
+            // Insert a new cell for the rejection reason
+            let reasonCell = row.insertCell(3); // Adjusted index to fit the table structure
+            reasonCell.textContent = reason;
+        }
+
+        // Remove action buttons for approved/canceled requests
+        if (targetTableId === 'approved-requests') {
+            row.deleteCell(4);
+        } else if (targetTableId === 'pending-requests') {
+            // Replace "Move to Pending" with "Approve" and "Deny" for Pending Requests
+            row.cells[4].innerHTML = `
+                <button class="approve" onclick="moveRequest(this, 'approved-requests')">Approve</button>
+                <button class="deny" onclick="moveRequest(this, 'canceled-requests')">Deny</button>
+            `;
+        }
+
+        targetTable.appendChild(row); // Move row to target table
     }
 
-    targetTable.appendChild(row); // Move row to target table
-}
     </script>
+    
     <script src="/js/script.js"></script>    
 </body>
 </html>
