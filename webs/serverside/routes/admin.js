@@ -5,7 +5,7 @@ import User from "../models/user.js";
 
 const router = express.Router();
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.252.73";
+const localIP = "192.168.1.13";
 
 router.use(express.json());
 
