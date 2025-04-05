@@ -30,48 +30,113 @@
     </section>
 
     <main id="main-content">
-        <h1>Admin - Manage Requests</h1>
+    <h1>Admin - Manage Requests</h1>
 
-        <% if (typeof newRequests !== "undefined" && newRequests.length > 0) { %>
-            <div class="request-table">
-                <table>
-                    <thead>
+    <!-- New Requests Table -->
+    <div class="table-container">
+        <h2>New Requests</h2>
+        <% if (newRequests && newRequests.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Document Type</th>
+                        <th>Reason for Request</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% newRequests.forEach(function(request) { %>
                         <tr>
-                            <th>Student Name</th>
-                            <th>Status</th>
-                            <th>Submitted At</th>
-                            <th>Action</th>
+                            <td><%= request.studentName %></td>
+                            <td><%= request.documentType %></td>
+                            <td><%= request.reason %></td>
+                            <td><%= request.dateRequested %></td>
+                            <td><span class="status pending">Pending</span></td>
+                            <td>
+                                <form action="/admin/request/<%= request._id %>/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="status" value="Approved">
+                                    <button type="submit" class="approve">Approve</button>
+                                </form>
+                                <form action="/admin/request/<%= request._id %>/status" method="POST" style="display:inline;">
+                                    <input type="hidden" name="status" value="Rejected">
+                                    <button type="submit" class="reject">Reject</button>
+                                </form>
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        <% newRequests.forEach(request => { %>
-                            <tr>
-                                <td><%= request.studentName %></td>
-                                <td>
-                                    <span class="status <%= request.status.toLowerCase() %>">
-                                        <%= request.status.charAt(0).toUpperCase() + request.status.slice(1) %>
-                                    </span>
-                                </td>
-                                <td><%= request.submittedAt.toLocaleString() %></td>
-                                <td class="action-buttons">
-                                    <form action="/admin/request/<%= request._id %>/status" method="POST" style="display:inline;">
-                                        <input type="hidden" name="status" value="approved">
-                                        <button class="approve" type="submit">Approve</button>
-                                    </form>
-                                    <form action="/admin/request/<%= request._id %>/reject" method="POST" onsubmit="return confirmReject(this)" style="display:inline;">
-                                        <input type="hidden" name="reason" value="">
-                                        <button class="reject" type="submit">Reject</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        <% }) %>
-                    </tbody>
-                </table>
-            </div>
-        <% } else { %> 
-            <p class="no-requests">No requests found.</p>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-requests">No new requests.</p>
         <% } %>
-    </main>
+    </div>
+
+    <!-- Approved Requests Table -->
+    <div class="table-container">
+        <h2>Approved Requests</h2>
+        <% if (approvedRequests && approvedRequests.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Document Type</th>
+                        <th>Reason for Request</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% approvedRequests.forEach(function(request) { %>
+                        <tr>
+                            <td><%= request.studentName %></td>
+                            <td><%= request.documentType %></td>
+                            <td><%= request.reason %></td>
+                            <td><%= request.dateRequested %></td>
+                            <td><span class="status approved">Approved</span></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-requests">No approved requests.</p>
+        <% } %>
+    </div>
+
+    <!-- Denied Requests Table -->
+    <div class="table-container">
+        <h2>Denied Requests</h2>
+        <% if (rejectedRequests && rejectedRequests.length > 0) { %>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Student Name</th>
+                        <th>Document Type</th>
+                        <th>Reason for Request</th>
+                        <th>Request Date</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% rejectedRequests.forEach(function(request) { %>
+                        <tr>
+                            <td><%= request.studentName %></td>
+                            <td><%= request.documentType %></td>
+                            <td><%= request.reason %></td>
+                            <td><%= request.dateRequested %></td>
+                            <td><span class="status rejected">Rejected</span></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        <% } else { %>
+            <p class="no-requests">No rejected requests.</p>
+        <% } %>
+    </div>
+</main>
+
 
     <script src="/js/script.js"></script>
     <script>
