@@ -15,6 +15,19 @@ studentSchema.pre("save", async function (next) {
     next();
 });
 
+// Notify after creation
+studentSchema.post("save", function (doc, next) {
+  sendNotification("create", doc);
+  next();
+});
+
+// Notify after update
+studentSchema.post("findOneAndUpdate", async function (res, next) {
+  const updatedStudent = await this.model.findOne(this.getQuery());
+  sendNotification("update", updatedStudent);
+  next();
+});
+
 // Method to compare passwords
 studentSchema.methods.comparePassword = function (password) {
     return bcrypt.compare(password, this.password);
