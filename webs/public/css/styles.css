@@ -520,7 +520,7 @@ input:checked + .slider::before {
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -571,4 +571,42 @@ button[type="submit"]:hover {
 
 #approved-requests tr:hover, #rejected-requests tr:hover {
     background-color: #f1f1f1;
+}
+
+/* Style the pending-requests table */
+#pending-requests {
+width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+#pending-requests th, #pending-requests td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#pending-requests th {
+    background-color: #2C3E50;
+    color: #fff;
+    font-size: 18px;
+}
+
+#pending-requests td {
+    color: #333;
+}
+
+#pending-requests tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+#pending-requests tr:hover {
+    background-color: #f1f1f1;
+}
+
+#pending-requests td:last-child {
+    text-transform: capitalize;
 }

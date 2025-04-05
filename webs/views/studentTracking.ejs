@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="/images/EduVault.png">
-    <title>Tracking</title>
+    <title>Track Requests</title>
     <link rel="stylesheet" href="../CSS/styles.css">
 </head>
 
@@ -18,81 +18,84 @@
         </div>
 
         <div class="items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/notif">Notifications</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+            <li><a href="/students">Home</a></li>
+            <li><a href="/students/track" class="active">Track</a></li>
+            <li><a href="/students/settings">Settings</a></li>
+            <li><a href="/students/notif">Notifications</a></li>
+            <li><a href="/students/help">Help</a></li>
         </div>
     </section>
 
     <section id="main-content">
-        <h2>Track Your Request</h2>
+        <h2>Track Your Requests</h2>
 
-        <table id="pending-requests">
-            <thead>
-                <tr>
-                    <th>Request ID</th>
-                    <th>Document Type</th>
-                    <th>Date Submitted</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% requests.filter(r => r.status === "new" || r.status === "pending").forEach(req => { %>
+        <div class="request-status">
+            <table id="pending-requests">
+                <thead>
                     <tr>
-                        <td><%= req._id %></td>
-                        <td><%= req.documentType %></td>
-                        <td><%= new Date(req.createdAt).toLocaleDateString() %></td>
-                        <td><%= req.status.charAt(0).toUpperCase() + req.status.slice(1) %></td>
+                        <th>Request ID</th>
+                        <th>Document Type</th>
+                        <th>Date Submitted</th>
+                        <th>Status</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <% requests.filter(r => r.status === "new" || r.status === "pending").forEach(req => { %>
+                        <tr>
+                            <td><%= req._id %></td>
+                            <td><%= req.documentType %></td>
+                            <td><%= new Date(req.createdAt).toLocaleDateString() %></td>
+                            <td><%= req.status.charAt(0).toUpperCase() + req.status.slice(1) %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            
 
-        <table id="approved-requests">
-            <thead>
-                <tr>
-                    <th>Request ID</th>
-                    <th>Document Type</th>
-                    <th>Date Approved</th>
-                    <th>Download</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% requests.filter(r => r.status === "approved").forEach(req => { %>
+            <table id="approved-requests">
+                <thead>
                     <tr>
-                        <td><%= req._id %></td>
-                        <td><%= req.documentType %></td>
-                        <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
-                        <td><a href="<%= req.fileUrl || '#' %>" target="_blank">Download</a></td>
+                        <th>Request ID</th>
+                        <th>Document Type</th>
+                        <th>Date Approved</th>
+                        <th>Download</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>
-        
-        <table id="rejected-requests">
-            <thead>
-                <tr>
-                    <th>Request ID</th>
-                    <th>Document Type</th>
-                    <th>Date Rejected</th>
-                    <th>Reason</th>  <!-- Add header for Reason -->
-                </tr>
-            </thead>
-            <tbody>
-                <% requests.filter(r => r.status === "rejected").forEach(req => { %>
+                </thead>
+                <tbody>
+                    <% requests.filter(r => r.status === "approved").forEach(req => { %>
+                        <tr>
+                            <td><%= req._id %></td>
+                            <td><%= req.documentType %></td>
+                            <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
+                            <td><a href="<%= req.fileUrl || '#' %>" target="_blank">Download</a></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            
+            <table id="rejected-requests">
+                <thead>
                     <tr>
-                        <td><%= req._id %></td>
-                        <td><%= req.documentType %></td>
-                        <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
-                        <!-- Display rejection reason -->
-                        <td><%= req.rejectionReason || 'No reason provided' %></td>
+                        <th>Request ID</th>
+                        <th>Document Type</th>
+                        <th>Date Rejected</th>
+                        <th>Reason</th>
                     </tr>
-                <% }) %>
-            </tbody>
-        </table>        
+                </thead>
+                <tbody>
+                    <% requests.filter(r => r.status === "rejected").forEach(req => { %>
+                        <tr>
+                            <td><%= req._id %></td>
+                            <td><%= req.documentType %></td>
+                            <td><%= new Date(req.updatedAt).toLocaleDateString() %></td>
+                            <td><%= req.rejectionReason || 'No reason provided' %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>        
+        </div>
     </section>
+
     <script src="/js/script.js"></script>
 </body>
 </html>
