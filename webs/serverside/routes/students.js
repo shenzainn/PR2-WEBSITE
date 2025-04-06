@@ -4,20 +4,10 @@ import Request from "../models/request.js";
 const router = express.Router();  // Now it's safe to use express.Router()
 
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.100.76";
+const localIP = "192.168.1.13";
 
 router.get("/", (req, res) => {
-    console.log("Session data in GET / route:", req.session);
-
-    if (!req.session.studentNumber) {
-        return res.redirect("/login");  // Redirect to login if no student info is found
-    }
-
-    res.render('StudentHome', { 
-        studentNumber: req.session.studentNumber,  // Pass student number to the view
-        localIP, 
-        portNum 
-    });
+    res.render('StudentHome', { user: req.user, localIP, portNum });
 });
 
 router.get("/track", async (req, res) => {
