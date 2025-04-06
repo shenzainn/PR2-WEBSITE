@@ -62,7 +62,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% requests.filter(r => r.status === "approved").forEach(req => { %>
+                    <% requests.filter(r => r.status === "Approved").forEach(req => { %>
                         <tr>
                             <td><%= req._id %></td>
                             <td><%= req.documentType %></td>
@@ -83,7 +83,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <% requests.filter(r => r.status === "rejected").forEach(req => { %>
+                    <% requests.filter(r => r.status === "Rejected").forEach(req => { %>
                         <tr>
                             <td><%= req._id %></td>
                             <td><%= req.documentType %></td>

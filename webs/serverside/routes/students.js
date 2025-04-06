@@ -34,36 +34,27 @@ router.get("/request", (req, res) => {
 });
 
 // Route for submitting new requests
-router.post("/request", async (req, res) => {
+router.post('/request', async (req, res) => {
     try {
-        const {
-            studentName,
-            studentNumber,
-            gradeSection,
-            schoolYear,
-            documentType,
-            reason
-        } = req.body;
-
         const newRequest = new Request({
-            studentName,
-            studentNumber,
-            gradeSection,
-            schoolYear,
-            documentType,
-            reason,
-            status: "new", // default status
-            submittedAt: new Date()
+            studentName: req.body.studentName,
+            studentNumber: req.body.studentNumber,
+            gradeSection: req.body.gradeSection,
+            schoolYear: req.body.schoolYear,
+            documentType: req.body.documentType,
+            reason: req.body.reason,
+            status: 'new', // default status
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
 
         await newRequest.save();
-        res.redirect("/students/track");
-    } catch (err) {
-        console.error("Error submitting request:", err);
-        res.status(500).send("Failed to submit request.");
+        res.redirect('/students/track'); // Redirect to tracking page
+    } catch (error) {
+        console.error('Failed to save request:', error);
+        res.status(500).send('Server Error');
     }
 });
-
 
 router.get('/settings', (req, res) => {
     res.render("StudentSettings.ejs",{portNum, localIP })

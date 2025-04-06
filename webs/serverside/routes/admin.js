@@ -24,18 +24,16 @@ router.get("/user", async (req, res) => {
         res.render("AdminUsers.ejs", { portNum, localIP, users: [] });
     }
 });
-router.get("/track", async (req, res) => {
+router.get('/track', async (req, res) => {
     try {
         const newRequests = await RequestModel.find({ status: 'new' });
-        const pendingRequests = await RequestModel.find({ status: 'pending' });
-        const approvedRequests = await RequestModel.find({ status: 'approved' });
-        const rejectedRequests = await RequestModel.find({ status: 'rejected' });
+        const approvedRequests = await RequestModel.find({ status: 'Approved' });
+        const rejectedRequests = await RequestModel.find({ status: 'Rejected' });
 
         res.render("AdminTracking.ejs", {
             portNum,
             localIP,
             newRequests,
-            pendingRequests,
             approvedRequests,
             rejectedRequests
         });

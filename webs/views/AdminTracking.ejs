@@ -53,7 +53,7 @@
                             <td><%= request.studentName %></td>
                             <td><%= request.documentType %></td>
                             <td><%= request.reason %></td>
-                            <td><%= request.dateRequested %></td>
+                            <td><%= new Date(request.createdAt).toLocaleDateString()  %></td>
                             <td><span class="status pending">Pending</span></td>
                             <td>
                                 <form action="/admin/request/<%= request._id %>/status" method="POST" style="display:inline;">
@@ -94,7 +94,7 @@
                             <td><%= request.studentName %></td>
                             <td><%= request.documentType %></td>
                             <td><%= request.reason %></td>
-                            <td><%= request.dateRequested %></td>
+                            <td><%= new Date(request.createdAt).toLocaleDateString()  %></td>
                             <td><span class="status approved">Approved</span></td>
                         </tr>
                     <% }); %>
@@ -125,7 +125,7 @@
                             <td><%= request.studentName %></td>
                             <td><%= request.documentType %></td>
                             <td><%= request.reason %></td>
-                            <td><%= request.dateRequested %></td>
+                            <td><%= new Date(request.createdAt).toLocaleDateString()  %></td>
                             <td><span class="status rejected">Rejected</span></td>
                         </tr>
                     <% }); %>
