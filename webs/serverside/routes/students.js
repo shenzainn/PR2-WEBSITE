@@ -4,9 +4,11 @@ import Request from "../models/request.js";
 const router = express.Router();  // Now it's safe to use express.Router()
 
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.1.13";
+const localIP = "192.168.100.76";
 
 router.get("/", (req, res) => {
+    console.log(req.user);
+    console.log("Session data:", req.session);
     res.render('StudentHome', { user: req.user, localIP, portNum });
 });
 
