@@ -236,6 +236,9 @@ app.post("/login", async (req, res) => {
       req.session.studentNumber = user.studentNumber;
       req.session.role = user.role;  // Store role if needed
 
+      console.log("Session after login:", req.session);
+
+
       if (!password || !(await bcrypt.compare(password, user.password))) {
           console.log("Incorrect password");
           return res.status(401).json({ success: false, message: "Invalid credentials" });

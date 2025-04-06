@@ -29,7 +29,7 @@
     </section>
     <section id="main-content">
         <div class="welcome">
-            <h1>Welcome, [Student]</h1>
+            <h1>Welcome, <%= studentNumber %></h1>
             <p>Here's a quick overview of what you can do</p>
         </div>
 
@@ -56,9 +56,7 @@
             </div>
         </div>
 
-        <% if (user && user.role === 'admin') { %>
-            <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/admin/register'">Register Student</button>
-        <% } %>
+    </section>
     <script src="/js/script.js"></script>    
 </body>
 </html>

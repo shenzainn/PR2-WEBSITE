@@ -5,14 +5,38 @@ import User from "../models/user.js";
 
 const router = express.Router();
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.1.13";
+const localIP = "192.168.100.76";
 
 router.use(express.json());
 
 //link routes, DO NOT DELETE ANYTHING
-router.get("/", (req, res) => {
-    res.render("AdminHome.ejs", { portNum, localIP });
+router.get("/", async (req, res) => {
+    try {
+        // Fetch the admin user from the database
+        const adminUser = await User.findOne({ role: 'admin' }); // Adjust query if necessary
+
+         // Debug line to check if the user data is correct
+
+        if (!adminUser) {
+            return res.status(404).send("Admin user not found");
+        }
+
+        // Pass the admin's studentName to the view
+        res.render("AdminHome.ejs", {
+            portNum,
+            localIP,
+            adminName: adminUser.studentName // Pass the correct studentName
+        });
+
+        console.log("Admin User:", adminUser);console.log("Admin User:", adminUser);
+    } catch (error) {
+        console.error("Error fetching admin user:", error);
+        res.status(500).send("Server error");
+    }
 });
+
+
+
 
 // Route: Render User Management Page
 router.get("/user", async (req, res) => {
