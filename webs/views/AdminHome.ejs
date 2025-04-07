@@ -18,11 +18,12 @@
         </div>
         
         <div class="items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/track">Track Requests</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/user">User Management</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/admin/help">Help</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/">Home</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/docManage">Manage Documents</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/track">Track Requests</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/user">User Management</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/settings">Settings</a></li>
+            <li><a href="http://localhost:<%= portNum%>/admin/help">Help</a></li>
         </div>
     </section>
 
@@ -35,13 +36,13 @@
             <div class="action-card">
                 <h2>Track Requests</h2>
                 <p>Monitor the status of ongoing document processing.</p>
-                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/admin/track'">Go</button>
+                <button onclick="location.href='http://localhost:<%= portNum%>/admin/track'">Go</button>
             </div>
 
             <div class="action-card">
                 <h2>User Management</h2>
                 <p>View, add, or remove users from the system.</p>
-                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/admin/user'">Go</button>
+                <button onclick="location.href='http://localhost:<%= portNum%>/admin/user'">Go</button>
             </div>
         </div>
 

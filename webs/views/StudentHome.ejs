@@ -20,16 +20,16 @@
         </div>
         
         <div class = "items">
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students">Home</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/track">Track</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/settings">Settings</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/notif">Notifications</a></li>
-            <li><a href="http://<%= localIP%>:<%= portNum%>/students/help">Help</a></li>
+            <li><a href="http://localhost:<%= portNum %>/students">Home</a></li>
+            <li><a href="http://localhost:<%= portNum %>/students/track">Track</a></li>
+            <li><a href="http://localhost:<%= portNum %>/students/settings">Settings</a></li>
+            <li><a href="http://localhost:<%= portNum %>/students/notif">Notifications</a></li>
+            <li><a href="http://localhost:<%= portNum %>/students/help">Help</a></li>
         </div>
     </section>
     <section id="main-content">
         <div class="welcome">
-            <h1>Welcome Student</h1>
+            <h1>Welcome,<%= user?.studentNumber%></h1>
             <p>Here's a quick overview of what you can do</p>
         </div>
 
@@ -37,17 +37,17 @@
             <div class="action-card">
                 <h2>Submit Request</h2>
                 <p>Request and manage your documents easily.</p>
-                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/students/request'">Request</button>
+                <button onclick="location.href='http://localhost:<%= portNum%>/students/request'">Request</button>
             </div>
             <div class="action-card">
                 <h2>Track Status</h2>
                 <p>Check the progress of your submissions.</p>
-                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/students/track'">View</button>
+                <button onclick="location.href='http://localhost:<%= portNum%>/students/track'">View</button>
             </div>
             <div class="action-card">
                 <h2>Notifications</h2>
                 <p>Stay updated with document actions.</p>
-                <button onclick="location.href='http://<%= localIP%>:<%= portNum%>/students/notif'">Check</button>
+                <button onclick="location.href='http://localhost:<%= portNum%>/students/notif'">Check</button>
             </div>
         </div>
 

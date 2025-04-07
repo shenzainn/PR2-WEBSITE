@@ -50,6 +50,21 @@ app.use(session({
   })
 }));
 
+app.use(async (req, res, next) => {
+  if (req.session && req.session.studentNumber) {
+      try {
+          const user = await User.findOne({ studentNumber: req.session.studentNumber });
+          req.user = user; // Attach user details to req
+      } catch (error) {
+          console.error("Error fetching user:", error);
+      }
+  } else {
+      req.user = null; // No user logged in
+  }
+  next();
+});
+
+
 app.get("/", (req, res) => {
     console.log(os.hostname());
 

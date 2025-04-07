@@ -7,6 +7,8 @@ const portNum = process.env.PORT || 3000;
 const localIP = "192.168.99.73";
 
 router.get("/", (req, res) => {
+    console.log(req.user);
+    console.log("Session data:", req.session);
     res.render('StudentHome', { user: req.user, localIP, portNum });
 });
 
