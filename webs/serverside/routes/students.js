@@ -4,7 +4,7 @@ import Request from "../models/request.js";
 const router = express.Router();  // Now it's safe to use express.Router()
 
 const portNum = process.env.PORT || 3000;
-const localIP = "192.168.1.13";
+const localIP = "192.168.99.73";
 
 router.get("/", (req, res) => {
     res.render('StudentHome', { user: req.user, localIP, portNum });

@@ -9,7 +9,7 @@ const requestSchema = new mongoose.Schema({
     reason: String,
     status: {
         type: String,
-        enum: ['new', 'pending', 'approved', 'rejected'],
+        enum: ['new', 'pending', 'Approved', 'Rejected'],
         default: 'new'
     },
     rejectionReason: String,
